@@ -1,193 +1,118 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE html><html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meu Portfólio</title>
-
-  <!-- Vue 3 CDN -->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Animate.css CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-  <style>
-    body {
-      background: #0f0f0f;
-    }
+  <title>Portfólio - Mateus Oliveira</title>  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>  <script src="https://cdn.tailwindcss.com"></script>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>  <style>
+    body { background: #0f0f0f; }
     .foto-perfil {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid #2dd4bf;
+      width: 140px; height: 140px; object-fit: cover;
+      border-radius: 50%; border: 4px solid #2dd4bf;
       box-shadow: 0 4px 24px rgba(45,212,191,0.3);
-      margin: 0 auto 18px;
-      display: block;
+      margin: 0 auto 18px; display: block;
     }
-  </style>
-</head>
+  </style></head>
 <body class="text-white">
+  <div id="app" class="max-w-3xl mx-auto p-5"><header class="text-center mb-10" data-scroll="animate__fadeInDown">
+  <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
+  <h1 class="text-4xl font-bold mb-2">{{ nome }}</h1>
+  <p class="text-lg text-gray-300">{{ descricao }}</p>
+</header>
 
-  <div id="app" class="max-w-3xl mx-auto p-5">
+<section class="mb-8" data-scroll="animate__fadeInLeft">
+  <h2 class="text-2xl font-semibold mb-3 text-teal-400">Sobre Mim</h2>
+  <p class="text-gray-300 text-justify leading-relaxed">{{ sobre }}</p>
+</section>
 
-    <!-- Cabeçalho -->
-    <header class="text-center mb-10" data-scroll="animate__fadeInDown">
-      <img 
-        src="IMG-20251123-WA0006.jpg"
-        alt="Foto de Mateus Oliveira" 
-        class="foto-perfil"
-      >
-      <h1 class="text-4xl font-bold mb-2">{{ nome }}</h1>
-      <p class="text-lg text-gray-300">{{ descricao }}</p>
-    </header>
-
-    <!-- Sobre mim -->
-    <section class="mb-8" data-scroll="animate__fadeInLeft">
-      <h2 class="text-2xl font-semibold mb-3 text-teal-400">Sobre Mim</h2>
-      <p class="text-gray-300 text-justify leading-relaxed">
-        {{ sobre }}
-      </p>
-
-      <div class="flex gap-2 mt-3 flex-wrap">
-        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">Vue.js</span>
-        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">Tailwind CSS</span>
-        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">JavaScript</span>
-        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">Front-end</span>
-        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">Laravel</span>
-        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm">API REST</span>
-      </div>
-    </section>
-
-    <!-- Experiências -->
-    <section class="mt-12" data-scroll="animate__fadeInLeft">
-      <h2 class="text-2xl font-semibold mb-6 text-teal-400">Experiências Profissionais</h2>
-
-      <div class="flex flex-col gap-4">
-        <div 
-          v-for="exp in experiencias"
-          :key="exp.id"
-          class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-700 
-                 hover:scale-[1.02] transition transform duration-300"
-        >
-          <h3 class="text-xl font-bold">{{ exp.cargo }}</h3>
-          <p class="text-gray-400 text-sm mb-2">{{ exp.empresa }} • {{ exp.periodo }}</p>
-          <p class="text-gray-300 leading-relaxed">{{ exp.descricao }}</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projetos -->
-    <section class="mt-12" data-scroll="animate__fadeInLeft">
-      <h2 class="text-2xl font-semibold mb-6 text-teal-400">Projetos</h2>
-
-      <div class="flex flex-col gap-4">
-        <div 
-          v-for="p in projetos" 
-          :key="p.id"
-          data-scroll="animate__fadeInUp"
-          class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-700 
-                 hover:scale-[1.02] transition transform duration-300"
-        >
-          <h3 class="text-xl font-bold mb-1">{{ p.titulo }}</h3>
-          <p class="text-gray-300 mb-3">{{ p.descricao }}</p>
-          <a 
-            :href="p.link" 
-            target="_blank"
-            class="text-teal-400 hover:text-teal-300 underline"
-          >
-            Ver projeto →
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contato -->
-    <footer class="text-center mt-12" data-scroll="animate__fadeInUp">
-      <p class="text-gray-400">Contato: {{ email }}</p>
-      <p class="mt-2 text-gray-400">
-        <a href="https://github.com/MateusOliveira-jesus" 
-           target="_blank" 
-           class="text-teal-400 underline hover:text-teal-300">
-          GitHub: MateusOliveira-jesus
-        </a>
-      </p>
-    </footer>
-
+<section class="mt-12" data-scroll="animate__fadeInLeft">
+  <h2 class="text-2xl font-semibold mb-6 text-teal-400">Experiências Profissionais</h2>
+  <div class="flex flex-col gap-4">
+    <div v-for="exp in experiencias" :key="exp.id" class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-700 hover:scale-[1.02] transition">
+      <h3 class="text-xl font-bold">{{ exp.cargo }}</h3>
+      <p class="text-gray-400 text-sm mb-2">{{ exp.empresa }} • {{ exp.periodo }}</p>
+      <p class="text-gray-300 leading-relaxed">{{ exp.descricao }}</p>
+    </div>
   </div>
+</section>
 
-  <!-- Vue App -->
-  <script>
+<section class="mt-12" data-scroll="animate__fadeInLeft">
+  <h2 class="text-2xl font-semibold mb-6 text-teal-400">Projetos</h2>
+  <div class="flex flex-col gap-4">
+    <div v-for="p in projetos" :key="p.id" class="bg-gray-900 p-5 rounded-xl border border-gray-700 hover:scale-[1.02] transition">
+      <h3 class="text-xl font-bold mb-1">{{ p.titulo }}</h3>
+      <p class="text-gray-300 mb-3">{{ p.descricao }}</p>
+    </div>
+  </div>
+</section>
+
+<footer class="text-center mt-12" data-scroll="animate__fadeInUp">
+  <p class="text-gray-400">Contato: {{ email }}</p>
+  <p class="mt-2 text-gray-400">
+    <a href="https://github.com/MateusOliveira-jesus" target="_blank" class="text-teal-400 underline hover:text-teal-300">GitHub: MateusOliveira-jesus</a>
+  </p>
+</footer>
+
+  </div>  <script>
     const app = {
       data() {
         return {
           nome: "Mateus Oliveira",
-          descricao: "Desenvolvedor Web • Vue.js • Tailwind CSS • Front-end • API",
+          descricao: "Full Stack Developer | PHP | Laravel | Vue.js | Filament | Docker | Oracle | MySQL | GitLab | APIs REST | SEO",
           email: "mateus.oliveira.retiba@gmail.com",
 
-          sobre: `Olá! Sou Mateus Oliveira, apaixonado por tecnologia e desenvolvimento web. 
-Tenho experiência em criação de interfaces modernas, responsivas e integração entre front-end e back-end. 
-Trabalho principalmente com Vue.js, Tailwind CSS, JavaScript e Laravel, sempre buscando performance e ótimas experiências de usuário.`,
+          sobre: `Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa), onde contribuo para a criação de aplicações web utilizando PHP, Laravel, Filament, Vue.js e bancos de dados Oracle. Minha atuação inclui integrações de APIs RESTful, criação e manutenção de sistemas internos. Cursando Análise e Desenvolvimento de Sistemas na Estácio, busco entregar soluções escaláveis, seguras e centradas no usuário.`,
 
           experiencias: [
             {
               id: 1,
-              empresa: "Empresa X",
-              cargo: "Desenvolvedor Front-end",
-              periodo: "2023 - 2024",
-              descricao: "Desenvolvimento de interfaces modernas usando Vue.js, Tailwind e integração com APIs."
+              empresa: "Universidade Santo Amaro - Unisa",
+              cargo: "Desenvolvedor Full Stack",
+              periodo: "ago. 2025 - atual",
+              descricao: "Desenvolvimento de sistemas internos com Laravel, Filament, Vue.js e Oracle. Integração de APIs, automação de processos e criação de interfaces administrativas."
             },
             {
               id: 2,
-              empresa: "Agência Y",
-              cargo: "Web Designer",
-              periodo: "2022 - 2023",
-              descricao: "Criação de landing pages otimizadas, SEO e melhoria de performance."
+              empresa: "Doutores da Web",
+              cargo: "Desenvolvedor Fullstack PHP Pl.",
+              periodo: "mar. 2025 - jul. 2025",
+              descricao: "Desenvolvimento de aplicações PHP/Laravel, testes automatizados com Cypress, integração de APIs, otimização de SEO e performance."
+            },
+            {
+              id: 3,
+              empresa: "Doutores da Web",
+              cargo: "Desenvolvedor Fullstack PHP Jr.",
+              periodo: "nov. 2023 - mar. 2025",
+              descricao: "Criação e manutenção de sites com HTML, CSS, JS e PHP. Correções de bugs, responsividade e integração com MySQL."
             }
           ],
 
           projetos: [
             {
               id: 1,
-              titulo: "Portfólio Moderno",
-              descricao: "Projeto feito com Vue, Tailwind e animações.",
-              link: "#"
+              titulo: "Painel Interno de Integrações (Laravel)",
+              descricao: "Sistema interno desenvolvido com Laravel, Filament e MySQL para gerenciamento de tokens, APIs e integrações corporativas."
             },
             {
               id: 2,
-              titulo: "Sistema de Login",
-              descricao: "Exemplo de JWT e autenticação.",
-              link: "#"
+              titulo: "Automação de backups com Python",
+              descricao: "Script seguro para backup automático de bancos de dados e arquivos internos."
             },
             {
               id: 3,
-              titulo: "API Laravel",
-              descricao: "API REST completa com autenticação.",
-              link: "#"
+              titulo: "Sistema de Autenticação JWT",
+              descricao: "API completa em Laravel com autenticação JWT e endpoints RESTful."
             }
           ]
         }
       }
     }
-
-    Vue.createApp(app).mount("#app")
-  </script>
-
-  <!-- Scroll Reveal Script -->
-  <script>
+    Vue.createApp(app).mount("#app");
+  </script>  <script>
     function animarAoScroll() {
       const elementos = document.querySelectorAll("[data-scroll]");
-
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add(
-              "animate__animated",
-              entry.target.dataset.scroll
-            );
+            entry.target.classList.add("animate__animated", entry.target.dataset.scroll);
             observer.unobserve(entry.target);
           }
         });
@@ -195,9 +120,6 @@ Trabalho principalmente com Vue.js, Tailwind CSS, JavaScript e Laravel, sempre b
 
       elementos.forEach(el => observer.observe(el));
     }
-
     animarAoScroll();
-  </script>
-
-</body>
+  </script></body>
 </html>
