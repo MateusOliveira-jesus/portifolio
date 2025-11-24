@@ -164,7 +164,7 @@
     </section>
 
     <!-- Projetos -->
-    <section class="mb-16 animate__animated animate__fadeInUp">
+    <section class="mb-16 animate__animated animate__fadeInUp"  v-if="showProjeto">
       <h2 class="text-3xl font-bold mb-8 section-title">Projetos</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div v-for="p in projetos" :key="p.id" class="card p-6 rounded-xl hover:scale-[1.02] transition duration-300 h-full flex flex-col">
@@ -202,6 +202,7 @@
     const app = {
       data() {
         return {
+          showProjeto = false;
           nome: "Mateus Oliveira de Jesus",
           descricao: "Full Stack Developer | PHP | Laravel | Vue.js | Filament | Docker | Oracle | MySQL | APIs RESTful",
           email: "mateus.oliveira.retiba@gmail.com",
