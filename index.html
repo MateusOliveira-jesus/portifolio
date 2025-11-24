@@ -1,118 +1,339 @@
-<!DOCTYPE html><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfólio - Mateus Oliveira</title>  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>  <script src="https://cdn.tailwindcss.com"></script>  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>  <style>
-    body { background: #0f0f0f; }
-    .foto-perfil {
-      width: 140px; height: 140px; object-fit: cover;
-      border-radius: 50%; border: 4px solid #2dd4bf;
-      box-shadow: 0 4px 24px rgba(45,212,191,0.3);
-      margin: 0 auto 18px; display: block;
+  <title>Portfólio - Mateus Oliveira</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <style>
+    body { 
+      background: #0f172a; 
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
-  </style></head>
+    .foto-perfil {
+      width: 160px; 
+      height: 160px; 
+      object-fit: cover;
+      border-radius: 50%; 
+      border: 4px solid #0ea5e9;
+      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.3);
+      margin: 0 auto 18px; 
+      display: block;
+    }
+    .card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .skill-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: #334155;
+      overflow: hidden;
+    }
+    .skill-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+      border-radius: 4px;
+    }
+    .section-title {
+      position: relative;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: #0ea5e9;
+      border-radius: 2px;
+    }
+    .nav-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #64748b;
+      transition: all 0.3s ease;
+    }
+    .nav-dot.active {
+      background: #0ea5e9;
+      transform: scale(1.3);
+    }
+  </style>
+</head>
 <body class="text-white">
-  <div id="app" class="max-w-3xl mx-auto p-5"><header class="text-center mb-10" data-scroll="animate__fadeInDown">
-  <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
-  <h1 class="text-4xl font-bold mb-2">{{ nome }}</h1>
-  <p class="text-lg text-gray-300">{{ descricao }}</p>
-</header>
+  <div id="app" class="max-w-5xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <header class="text-center mb-16 animate__animated animate__fadeIn">
+      <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
+      <h1 class="text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">{{ nome }}</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">{{ descricao }}</p>
+      
+      <div class="flex justify-center mt-6 space-x-4">
+        <a href="https://github.com/MateusOliveira-jesus" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg transition flex items-center">
+          <i class="fab fa-github mr-2"></i> GitHub
+        </a>
+        <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank" class="bg-blue-700 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition flex items-center">
+          <i class="fab fa-linkedin mr-2"></i> LinkedIn
+        </a>
+        <a :href="'mailto:' + email" class="bg-teal-700 hover:bg-teal-600 text-white px-4 py-2 rounded-lg transition flex items-center">
+          <i class="fas fa-envelope mr-2"></i> E-mail
+        </a>
+      </div>
+    </header>
 
-<section class="mb-8" data-scroll="animate__fadeInLeft">
-  <h2 class="text-2xl font-semibold mb-3 text-teal-400">Sobre Mim</h2>
-  <p class="text-gray-300 text-justify leading-relaxed">{{ sobre }}</p>
-</section>
+    <!-- Sobre Mim -->
+    <section class="mb-16 card p-8 rounded-2xl animate__animated animate__fadeInUp">
+      <h2 class="text-3xl font-bold mb-6 section-title">Sobre Mim</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <p class="text-gray-300 text-justify leading-relaxed mb-6">{{ sobre }}</p>
+          <div class="flex flex-wrap gap-2">
+            <span v-for="tag in interesses" :key="tag" class="bg-slate-700 text-cyan-300 px-3 py-1 rounded-full text-sm">
+              {{ tag }}
+            </span>
+          </div>
+        </div>
+        <div class="flex flex-col justify-center">
+          <div class="mb-6">
+            <h3 class="text-xl font-semibold mb-4 text-cyan-400">Formação Acadêmica</h3>
+            <div class="space-y-4">
+              <div v-for="edu in formacao" :key="edu.id" class="border-l-2 border-cyan-500 pl-4">
+                <h4 class="font-bold">{{ edu.curso }}</h4>
+                <p class="text-gray-400">{{ edu.instituicao }}</p>
+                <p class="text-sm text-gray-500">{{ edu.periodo }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<section class="mt-12" data-scroll="animate__fadeInLeft">
-  <h2 class="text-2xl font-semibold mb-6 text-teal-400">Experiências Profissionais</h2>
-  <div class="flex flex-col gap-4">
-    <div v-for="exp in experiencias" :key="exp.id" class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-700 hover:scale-[1.02] transition">
-      <h3 class="text-xl font-bold">{{ exp.cargo }}</h3>
-      <p class="text-gray-400 text-sm mb-2">{{ exp.empresa }} • {{ exp.periodo }}</p>
-      <p class="text-gray-300 leading-relaxed">{{ exp.descricao }}</p>
-    </div>
+    <!-- Habilidades -->
+    <section class="mb-16 card p-8 rounded-2xl animate__animated animate__fadeInUp">
+      <h2 class="text-3xl font-bold mb-6 section-title">Principais Competências</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div v-for="skill in habilidades" :key="skill.id" class="mb-4">
+          <div class="flex justify-between mb-2">
+            <span class="font-medium">{{ skill.nome }}</span>
+            <span class="text-cyan-400">{{ skill.nivel }}%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-progress" :style="{ width: skill.nivel + '%' }"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Experiências Profissionais -->
+    <section class="mb-16 animate__animated animate__fadeInUp">
+      <h2 class="text-3xl font-bold mb-8 section-title">Experiências Profissionais</h2>
+      <div class="space-y-6">
+        <div v-for="exp in experiencias" :key="exp.id" class="card p-6 rounded-xl hover:scale-[1.02] transition duration-300 border-l-4 border-cyan-500">
+          <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+            <h3 class="text-xl font-bold">{{ exp.cargo }}</h3>
+            <span class="text-cyan-400 font-medium bg-slate-800 px-3 py-1 rounded-full text-sm mt-2 md:mt-0">{{ exp.periodo }}</span>
+          </div>
+          <p class="text-gray-400 text-lg mb-4">{{ exp.empresa }}</p>
+          <p class="text-gray-300 leading-relaxed">{{ exp.descricao }}</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span v-for="tech in exp.tecnologias" :key="tech" class="bg-slate-800 text-gray-300 px-2 py-1 rounded text-xs">
+              {{ tech }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificações -->
+    <section class="mb-16 card p-8 rounded-2xl animate__animated animate__fadeInUp">
+      <h2 class="text-3xl font-bold mb-6 section-title">Certificações</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div v-for="cert in certificacoes" :key="cert.id" class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-cyan-500 transition">
+          <h3 class="font-bold text-lg mb-1">{{ cert.titulo }}</h3>
+          <p class="text-gray-400 text-sm mb-2">{{ cert.instituicao }}</p>
+          <p class="text-gray-500 text-xs">{{ cert.periodo }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projetos -->
+    <section class="mb-16 animate__animated animate__fadeInUp">
+      <h2 class="text-3xl font-bold mb-8 section-title">Projetos</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div v-for="p in projetos" :key="p.id" class="card p-6 rounded-xl hover:scale-[1.02] transition duration-300 h-full flex flex-col">
+          <h3 class="text-xl font-bold mb-3">{{ p.titulo }}</h3>
+          <p class="text-gray-300 mb-4 flex-grow">{{ p.descricao }}</p>
+          <div class="mt-auto">
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span v-for="tech in p.tecnologias" :key="tech" class="bg-slate-800 text-gray-300 px-2 py-1 rounded text-xs">
+                {{ tech }}
+              </span>
+            </div>
+            <div class="flex space-x-3">
+              <a v-if="p.link" :href="p.link" target="_blank" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center">
+                <i class="fas fa-external-link-alt mr-1"></i> Ver Projeto
+              </a>
+              <a v-if="p.github" :href="p.github" target="_blank" class="text-gray-400 hover:text-white text-sm font-medium flex items-center">
+                <i class="fab fa-github mr-1"></i> Código
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center mt-12 pt-8 border-t border-slate-800 animate__animated animate__fadeIn">
+      <p class="text-gray-400">Entre em contato: <a :href="'mailto:' + email" class="text-cyan-400 hover:text-cyan-300 underline">{{ email }}</a></p>
+      <p class="mt-4 text-gray-500 text-sm">
+        &copy; {{ new Date().getFullYear() }} Mateus Oliveira. Todos os direitos reservados.
+      </p>
+    </footer>
   </div>
-</section>
 
-<section class="mt-12" data-scroll="animate__fadeInLeft">
-  <h2 class="text-2xl font-semibold mb-6 text-teal-400">Projetos</h2>
-  <div class="flex flex-col gap-4">
-    <div v-for="p in projetos" :key="p.id" class="bg-gray-900 p-5 rounded-xl border border-gray-700 hover:scale-[1.02] transition">
-      <h3 class="text-xl font-bold mb-1">{{ p.titulo }}</h3>
-      <p class="text-gray-300 mb-3">{{ p.descricao }}</p>
-    </div>
-  </div>
-</section>
-
-<footer class="text-center mt-12" data-scroll="animate__fadeInUp">
-  <p class="text-gray-400">Contato: {{ email }}</p>
-  <p class="mt-2 text-gray-400">
-    <a href="https://github.com/MateusOliveira-jesus" target="_blank" class="text-teal-400 underline hover:text-teal-300">GitHub: MateusOliveira-jesus</a>
-  </p>
-</footer>
-
-  </div>  <script>
+  <script>
     const app = {
       data() {
         return {
-          nome: "Mateus Oliveira",
-          descricao: "Full Stack Developer | PHP | Laravel | Vue.js | Filament | Docker | Oracle | MySQL | GitLab | APIs REST | SEO",
+          nome: "Mateus Oliveira de Jesus",
+          descricao: "Full Stack Developer | PHP | Laravel | Vue.js | Filament | Docker | Oracle | MySQL | APIs RESTful",
           email: "mateus.oliveira.retiba@gmail.com",
 
-          sobre: `Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa), onde contribuo para a criação de aplicações web utilizando PHP, Laravel, Filament, Vue.js e bancos de dados Oracle. Minha atuação inclui integrações de APIs RESTful, criação e manutenção de sistemas internos. Cursando Análise e Desenvolvimento de Sistemas na Estácio, busco entregar soluções escaláveis, seguras e centradas no usuário.`,
+          sobre: "Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa) onde contribuo para a criação de aplicações web utilizando PHP Laravel Filament Vue.js e bancos de dados Oracle. Minha atuação inclui integração de APIs RESTful criação e manutenção de sistemas administrativos interno. Cursando Análise e Desenvolvimento de Sistemas na Estácio busco aprimorar continuamente minhas habilidades em desenvolvimento centrado no usuário e metodologias ágeis como Scrum e Kanban. Valorizo a colaboração em equipe e o aprendizado contínuo para entregar soluções escaláveis e de qualidade.",
+
+          interesses: ["Desenvolvimento Web", "APIs RESTful", "Performance", "SEO", "Scrum", "Kanban", "Docker", "Oracle"],
+
+          formacao: [
+            {
+              id: 1,
+              curso: "Análise e Desenvolvimento de Sistemas",
+              instituicao: "Estácio",
+              periodo: "2023 - 2025"
+            },
+            {
+              id: 2,
+              curso: "Analista de Sistemas",
+              instituicao: "Udemy Alumni",
+              periodo: "2022"
+            }
+          ],
+
+          habilidades: [
+            { id: 1, nome: "PHP", nivel: 90 },
+            { id: 2, nome: "Laravel", nivel: 85 },
+            { id: 3, nome: "JavaScript", nivel: 80 },
+            { id: 4, nome: "Vue.js", nivel: 75 },
+            { id: 5, nome: "MySQL", nivel: 85 },
+            { id: 6, nome: "Oracle", nivel: 80 },
+            { id: 7, nome: "Docker", nivel: 70 },
+            { id: 8, nome: "Git/GitLab", nivel: 80 }
+          ],
 
           experiencias: [
             {
               id: 1,
               empresa: "Universidade Santo Amaro - Unisa",
               cargo: "Desenvolvedor Full Stack",
-              periodo: "ago. 2025 - atual",
-              descricao: "Desenvolvimento de sistemas internos com Laravel, Filament, Vue.js e Oracle. Integração de APIs, automação de processos e criação de interfaces administrativas."
+              periodo: "ago 2025 - atual",
+              descricao: "Desenvolvimento de sistemas internos com Laravel Filament Vue.js e Oracle. Integração de APIs automação de processos e criação de interfaces administrativas.",
+              tecnologias: ["PHP", "Laravel", "Vue.js", "Filament", "Oracle", "Docker"]
             },
             {
               id: 2,
               empresa: "Doutores da Web",
               cargo: "Desenvolvedor Fullstack PHP Pl.",
-              periodo: "mar. 2025 - jul. 2025",
-              descricao: "Desenvolvimento de aplicações PHP/Laravel, testes automatizados com Cypress, integração de APIs, otimização de SEO e performance."
+              periodo: "mar 2025 - jul 2025",
+              descricao: "Desenvolvimento de aplicações PHP/Laravel testes automatizados com Cypress integração de APIs otimização de SEO e performance.",
+              tecnologias: ["PHP", "Laravel", "JavaScript", "MySQL", "Cypress", "SEO"]
             },
             {
               id: 3,
               empresa: "Doutores da Web",
               cargo: "Desenvolvedor Fullstack PHP Jr.",
-              periodo: "nov. 2023 - mar. 2025",
-              descricao: "Criação e manutenção de sites com HTML, CSS, JS e PHP. Correções de bugs, responsividade e integração com MySQL."
+              periodo: "nov 2023 - mar 2025",
+              descricao: "Criação e manutenção de sites com HTML CSS JS e PHP. Correções de bugs responsividade e integração com MySQL.",
+              tecnologias: ["PHP", "HTML", "CSS", "JavaScript", "MySQL", "Bootstrap"]
+            }
+          ],
+
+          certificacoes: [
+            {
+              id: 1,
+              titulo: "Laravel",
+              instituicao: "Udemy",
+              periodo: "jun 2024"
+            },
+            {
+              id: 2,
+              titulo: "Criação de API Rest PHP",
+              instituicao: "Udemy",
+              periodo: "abr 2024"
+            },
+            {
+              id: 3,
+              titulo: "PHP Moderno",
+              instituicao: "Curso Online",
+              periodo: "2023"
+            },
+            {
+              id: 4,
+              titulo: "HTML5 e CSS3",
+              instituicao: "Curso Online",
+              periodo: "2023"
             }
           ],
 
           projetos: [
             {
               id: 1,
-              titulo: "Painel Interno de Integrações (Laravel)",
-              descricao: "Sistema interno desenvolvido com Laravel, Filament e MySQL para gerenciamento de tokens, APIs e integrações corporativas."
+              titulo: "Painel Interno de Integrações",
+              descricao: "Sistema interno desenvolvido com Laravel Filament e MySQL para gerenciamento de tokens APIs e integrações corporativas.",
+              tecnologias: ["Laravel", "Filament", "MySQL", "APIs"],
+              github: "#"
             },
             {
               id: 2,
-              titulo: "Automação de backups com Python",
-              descricao: "Script seguro para backup automático de bancos de dados e arquivos internos."
+              titulo: "Automação de Backups",
+              descricao: "Script seguro para backup automático de bancos de dados e arquivos internos.",
+              tecnologias: ["Python", "Bash", "Cron"],
+              github: "#"
             },
             {
               id: 3,
               titulo: "Sistema de Autenticação JWT",
-              descricao: "API completa em Laravel com autenticação JWT e endpoints RESTful."
+              descricao: "API completa em Laravel com autenticação JWT e endpoints RESTful.",
+              tecnologias: ["Laravel", "JWT", "RESTful API"],
+              github: "#"
+            },
+            {
+              id: 4,
+              titulo: "Otimização de Performance",
+              descricao: "Implementação de técnicas de cache e otimização de consultas para melhorar performance de aplicações.",
+              tecnologias: ["Cache", "MySQL", "Performance"],
+              github: "#"
             }
           ]
         }
       }
     }
+    
     Vue.createApp(app).mount("#app");
-  </script>  <script>
+  </script>
+
+  <script>
     function animarAoScroll() {
-      const elementos = document.querySelectorAll("[data-scroll]");
+      const elementos = document.querySelectorAll(".card, header, section");
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate__animated", entry.target.dataset.scroll);
+            entry.target.classList.add("animate__animated", "animate__fadeInUp");
             observer.unobserve(entry.target);
           }
         });
@@ -120,6 +341,10 @@
 
       elementos.forEach(el => observer.observe(el));
     }
-    animarAoScroll();
-  </script></body>
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      animarAoScroll();
+    });
+  </script>
+</body>
 </html>
