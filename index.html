@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meu Portfólio</title>
+
+  <!-- Vue 3 CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Animate.css CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    body {
+      background: #0f0f0f;
+    }
+  </style>
+</head>
+<body class="text-white">
+
+  <div id="app" class="max-w-3xl mx-auto p-5">
+
+    <!-- Cabeçalho -->
+    <header class="text-center mb-10 animate__animated animate__fadeInDown">
+      <h1 class="text-4xl font-bold mb-2">{{ nome }}</h1>
+      <p class="text-lg text-gray-300">{{ descricao }}</p>
+    </header>
+
+    <!-- Projetos -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-6 animate__animated animate__fadeInLeft">
+        Projetos
+      </h2>
+
+      <div class="flex flex-col gap-4">
+        <div 
+          v-for="p in projetos" 
+          :key="p.id"
+          class="bg-gray-900 p-5 rounded-xl shadow-lg border border-gray-700 
+                 hover:scale-[1.02] transition transform duration-300 
+                 animate__animated animate__fadeInUp"
+        >
+          <h3 class="text-xl font-bold mb-1">{{ p.titulo }}</h3>
+          <p class="text-gray-300 mb-3">{{ p.descricao }}</p>
+          <a 
+            :href="p.link" 
+            target="_blank"
+            class="text-teal-400 hover:text-teal-300 underline"
+          >
+            Ver projeto →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contato -->
+    <footer class="text-center mt-12 animate__animated animate__fadeInUp">
+      <p class="text-gray-400">Contato: {{ email }}</p>
+    </footer>
+
+  </div>
+
+  <script>
+    const app = {
+      data() {
+        return {
+          nome: "Seu Nome Aqui",
+          descricao: "Desenvolvedor Web • Vue.js • Tailwind • Front-end",
+          email: "seuemail@gmail.com",
+
+          projetos: [
+            {
+              id: 1,
+              titulo: "Portfólio Moderno",
+              descricao: "Projeto feito com Vue, Tailwind e animações.",
+              link: "#"
+            },
+            {
+              id: 2,
+              titulo: "Sistema de Login",
+              descricao: "Exemplo de JWT e autenticação.",
+              link: "#"
+            },
+            {
+              id: 3,
+              titulo: "API Laravel",
+              descricao: "API REST completa com autenticação.",
+              link: "#"
+            }
+          ]
+        }
+      }
+    }
+
+    Vue.createApp(app).mount("#app")
+  </script>
+
+</body>
+</html>
