@@ -1,931 +1,977 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfólio - Mateus Oliveira</title>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-    }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    
-    .foto-perfil {
-      width: 140px; 
-      height: 140px; 
-      object-fit: cover;
-      border-radius: 50%; 
-      border: 4px solid #0ea5e9;
-      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.3);
-      margin: 0 auto 16px; 
-      display: block;
-      transition: all 0.5s ease;
-    }
-    
-    .foto-perfil:hover {
-      transform: scale(1.05);
-      box-shadow: 0 8px 32px rgba(14, 165, 233, 0.5);
-    }
-    
-    .skill-bar {
-      height: 8px;
-      border-radius: 4px;
-      overflow: hidden;
-      background-color: #e5e7eb;
-    }
-    
-    .dark .skill-bar {
-      background-color: #374151;
-    }
-    
-    .skill-progress {
-      height: 100%;
-      background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-      border-radius: 4px;
-      width: 0%;
-      transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .skill-progress.animated {
-      width: var(--skill-width);
-    }
-    
-    .section-title {
-      position: relative;
-      padding-bottom: 12px;
-      margin-bottom: 24px;
-    }
-    
-    .section-title:after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: #0ea5e9;
-      border-radius: 2px;
-      transition: width 0.3s ease;
-    }
-    
-    .section-title:hover:after {
-      width: 100px;
-    }
-    
-    .theme-transition {
-      transition: all 0.3s ease-in-out;
-    }
-    
-    /* Layout Grid Responsivo */
-    .main-container {
-      display: grid;
-      gap: 2rem;
-      min-height: 100vh;
-    }
-    
-    @media (min-width: 1024px) {
-      .main-container {
-        grid-template-columns: 320px 1fr;
-      }
-    }
-    
-    /* Sidebar responsiva */
-    .sidebar {
-      background: #f8fafc;
-    }
-    
-    .dark .sidebar {
-      background: #1f2937;
-    }
-    
-    @media (max-width: 1023px) {
-      .sidebar {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 90%;
-        max-width: 400px;
-        height: 100vh;
-        z-index: 50;
-        transition: left 0.3s ease;
-        overflow-y: auto;
-      }
-      
-      .sidebar.open {
-        left: 0;
-      }
-    }
-    
-    /* Overlay para mobile */
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      z-index: 40;
-      display: none;
-    }
-    
-    .overlay.active {
-      display: block;
-    }
-    
-    /* Grid adaptável para conteúdo */
-    .content-grid {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
-    }
-    
-    .content-grid-2 {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-    }
-    
-    /* Cards com altura igual */
-    .equal-height {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-    
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-    
-    .dark .card-hover:hover {
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Botões flutuantes */
-    .floating-btn {
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
-    }
-    
-    /* Animações de entrada */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.6s ease;
-    }
-    
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    
-    /* Destaque para busca */
-    .search-highlight {
-      background-color: #ffeb3b;
-      color: #000;
-      padding: 2px 4px;
-      border-radius: 3px;
-    }
-    
-    .dark .search-highlight {
-      background-color: #f59e0b;
-      color: #1f2937;
-    }
-    
-    /* Correção para mobile - sem scroll horizontal */
-    .mobile-safe {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-    
-    .text-break {
-      word-break: break-word;
-      overflow-wrap: break-word;
-    }
-    
-    /* Efeito de digitação responsivo */
-    .typing-container {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .typing-effect {
-      border-right: 2px solid #0ea5e9;
-      animation: blink-caret 0.75s step-end infinite;
-    }
-    
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #0ea5e9 }
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfólio - Mateus Oliveira</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    /* LinkedIn Style */
-    .linkedin-badge {
-      background: linear-gradient(135deg, #0077b5, #00a0dc);
-      color: white;
-      padding: 4px 12px;
-      border-radius: 16px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      display: inline-block;
-      margin-left: 8px;
-    }
+        .foto-perfil {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #0ea5e9;
+            box-shadow: 0 4px 24px rgba(14, 165, 233, 0.3);
+            margin: 0 auto 16px;
+            display: block;
+            transition: all 0.5s ease;
+        }
 
-    .stats-card {
-      background: white;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 16px;
-      text-align: center;
-    }
+        .foto-perfil:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.5);
+        }
 
-    .dark .stats-card {
-      background: #374151;
-      border-color: #4b5563;
-    }
+        .skill-bar {
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #e5e7eb;
+        }
 
-    .company-logo {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      object-fit: cover;
-      margin-right: 12px;
-    }
-  </style>
+        .dark .skill-bar {
+            background-color: #374151;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .skill-progress.animated {
+            width: var(--skill-width);
+        }
+
+        .section-title {
+            position: relative;
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #0ea5e9;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .section-title:hover:after {
+            width: 100px;
+        }
+
+        .theme-transition {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Layout Grid Responsivo */
+        .main-container {
+            display: grid;
+            gap: 2rem;
+            min-height: 100vh;
+        }
+
+        @media (min-width: 1024px) {
+            .main-container {
+                grid-template-columns: 320px 1fr;
+            }
+        }
+
+        /* Sidebar responsiva */
+        .sidebar {
+            background: #f8fafc;
+        }
+
+        .dark .sidebar {
+            background: #1f2937;
+        }
+
+        @media (max-width: 1023px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 90%;
+                max-width: 400px;
+                height: 100vh;
+                z-index: 50;
+                transition: left 0.3s ease;
+                overflow-y: auto;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+        }
+
+        /* Overlay para mobile */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Grid adaptável para conteúdo */
+        .content-grid {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+        }
+
+        .content-grid-2 {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+        }
+
+        /* Cards com altura igual */
+        .equal-height {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark .card-hover:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Botões flutuantes */
+        .floating-btn {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Animações de entrada */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Destaque para busca */
+        .search-highlight {
+            background-color: #ffeb3b;
+            color: #000;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+
+        .dark .search-highlight {
+            background-color: #f59e0b;
+            color: #1f2937;
+        }
+
+        /* Correção para mobile - sem scroll horizontal */
+        .mobile-safe {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        .text-break {
+            word-break: break-word;
+            overflow-wrap: break-word;
+        }
+
+        /* Efeito de digitação responsivo */
+        .typing-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .typing-effect {
+            border-right: 2px solid #0ea5e9;
+            animation: blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes blink-caret {
+
+            from,
+            to {
+                border-color: transparent
+            }
+
+            50% {
+                border-color: #0ea5e9
+            }
+        }
+
+        /* LinkedIn Style */
+        .linkedin-badge {
+            background: linear-gradient(135deg, #0077b5, #00a0dc);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .stats-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .dark .stats-card {
+            background: #374151;
+            border-color: #4b5563;
+        }
+
+        .company-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+    </style>
 </head>
+
 <body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white theme-transition mobile-safe">
-  <div id="app">
-    <!-- Overlay para mobile -->
-    <div class="overlay" :class="{ 'active': sidebarOpen }" @click="sidebarOpen = false"></div>
+    <div id="app">
+        <!-- Overlay para mobile -->
+        <div class="overlay" :class="{ 'active': sidebarOpen }" @click="sidebarOpen = false"></div>
 
-    <!-- Botões de Ação Fixos -->
-    <div class="fixed top-4 right-4 z-50 flex gap-2">
-      <!-- Botão Toggle Theme -->
-      <button 
-        @click="toggleTheme" 
-        class="w-12 h-12 rounded-full bg-cyan-500 hover:bg-cyan-600 dark:bg-cyan-600 dark:hover:bg-cyan-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 floating-btn"
-      >
-        <i :class="themeIcon" class="text-lg"></i>
-      </button>
-
-      <!-- Botão Menu Mobile -->
-      <button 
-        @click="sidebarOpen = !sidebarOpen"
-        class="w-12 h-12 md:hidden rounded-full bg-gray-800 hover:bg-gray-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-      >
-        <i class="fas fa-bars text-sm"></i>
-      </button>
-    </div>
-
-    <div class="main-container max-w-7xl mx-auto px-4 py-8">
-      <!-- Sidebar de Pesquisa e Navegação -->
-      <div class="sidebar p-6 border-r border-gray-200 dark:border-gray-700 theme-transition" :class="{ 'open': sidebarOpen }">
-        <div class="flex justify-between items-center mb-6">
-          <h3 class="text-xl font-bold text-gray-800 dark:text-white">Navegação</h3>
-          <button @click="sidebarOpen = false" class="md:hidden text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
-            <i class="fas fa-times text-lg"></i>
-          </button>
-        </div>
-        
-        <!-- Campo de Busca -->
-        <div class="relative mb-6">
-          <input 
-            type="text" 
-            v-model="searchTerm"
-            placeholder="Buscar no portfólio..."
-            class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-break"
-          >
-          <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-          <button 
-            v-if="searchTerm" 
-            @click="searchTerm = ''"
-            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-          >
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-
-        <!-- Resultados da Busca -->
-        <div v-if="searchResults.length > 0" class="mb-6">
-          <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Resultados ({{ searchResults.length }})</h4>
-          <div class="space-y-2 max-h-60 overflow-y-auto">
-            <div 
-              v-for="result in searchResults" 
-              :key="result.id"
-              @click="scrollToSection(result.section)"
-              class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-cyan-500 cursor-pointer transition-all duration-300 hover:shadow-md"
-            >
-              <p class="text-sm font-medium text-gray-800 dark:text-white text-break">{{ result.title }}</p>
-              <p class="text-xs text-gray-600 dark:text-gray-400 mt-1 text-break">{{ result.preview }}</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Navegação Rápida -->
-        <div class="mb-6">
-          <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4">Navegação Rápida</h4>
-          <div class="space-y-2">
-            <button 
-              v-for="nav in visibleNavigation" 
-              :key="nav.id"
-              @click="scrollToSection(nav.id)"
-              class="w-full text-left px-4 py-3 rounded-lg hover:bg-white dark:hover:bg-gray-700 transition-colors duration-200 flex items-center group"
-            >
-              <i :class="nav.icon" class="mr-3 text-cyan-500 w-5 text-center group-hover:scale-110 transition-transform"></i>
-              <span class="text-gray-700 dark:text-gray-300 font-medium">{{ nav.label }}</span>
+        <!-- Botões de Ação Fixos -->
+        <div class="fixed top-4 right-4 z-50 flex gap-2">
+            <!-- Botão Toggle Theme -->
+            <button @click="toggleTheme"
+                class="w-12 h-12 rounded-full bg-cyan-500 hover:bg-cyan-600 dark:bg-cyan-600 dark:hover:bg-cyan-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 floating-btn">
+                <i :class="themeIcon" class="text-lg"></i>
             </button>
-          </div>
+
+            <!-- Botão Menu Mobile -->
+            <button @click="sidebarOpen = !sidebarOpen"
+                class="w-12 h-12 md:hidden rounded-full bg-gray-800 hover:bg-gray-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
+                <i class="fas fa-bars text-sm"></i>
+            </button>
         </div>
 
-        <!-- Estatísticas (LinkedIn Style) -->
-        <div class="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
-          <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Estatísticas</h4>
-          <div class="grid grid-cols-2 gap-3 text-sm">
-            <div class="stats-card">
-              <div class="text-2xl font-bold text-cyan-500">{{ profileViews }}</div>
-              <div class="text-gray-600 dark:text-gray-400 text-xs">Visualizações</div>
-            </div>
-            <div class="stats-card">
-              <div class="text-2xl font-bold text-cyan-500">{{ postImpressions }}</div>
-              <div class="text-gray-600 dark:text-gray-400 text-xs">Impressões</div>
-            </div>
-            <div class="stats-card">
-              <div class="text-2xl font-bold text-cyan-500">{{ searchAppearances }}</div>
-              <div class="text-gray-600 dark:text-gray-400 text-xs">Pesquisas</div>
-            </div>
-            <div class="stats-card">
-              <div class="text-2xl font-bold text-cyan-500">{{ followers }}</div>
-              <div class="text-gray-600 dark:text-gray-400 text-xs">Seguidores</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Contatos Rápidos -->
-        <div class="mt-6">
-          <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Contato Rápido</h4>
-          <div class="flex flex-col gap-2">
-            <a href="https://github.com/MateusOliveira-jesus" target="_blank"
-               class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
-              <i class="fab fa-github mr-2"></i> GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
-               class="bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
-              <i class="fab fa-linkedin mr-2"></i> LinkedIn
-            </a>
-            <a href="mailto:mateus.oliveira.retiba@gmail.com"
-               class="bg-teal-600 hover:bg-teal-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
-              <i class="fas fa-envelope mr-2"></i> E-mail
-            </a>
-            <a href="tel:+5511978678459"
-               class="bg-green-600 hover:bg-green-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
-              <i class="fas fa-phone mr-2"></i> (11) 97867-8459
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Conteúdo Principal -->
-      <div class="content-area overflow-hidden">
-        <!-- Header -->
-        <header class="text-center mb-12 md:mb-16 fade-in py-8 md:py-12" id="inicio">
-          <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
-          <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-blue-500 text-break">
-            {{ nome }}
-            
-          </h1>
-          
-          <div class="typing-container">
-            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-break typing-effect">
-              {{ descricao }}
-            </p>
-          </div>
-
-          <!-- Informações do LinkedIn -->
-          <div class="mt-6 text-gray-600 dark:text-gray-400">
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 text-sm">
-              <div class="flex items-center">
-                <i class="fas fa-building mr-2 text-cyan-500"></i>
-                <span>Universidade Santo Amaro - Unisa</span>
-              </div>
-              <div class="flex items-center">
-                <i class="fas fa-graduation-cap mr-2 text-cyan-500"></i>
-                <span>Estácio</span>
-              </div>
-              <div class="flex items-center">
-                <i class="fas fa-map-marker-alt mr-2 text-cyan-500"></i>
-                <span>São Paulo, Brasil</span>
-              </div>
-            </div>
-            <div class="mt-4 flex justify-center gap-6 text-sm">
-              <span class="flex items-center">
-                <i class="fas fa-users mr-1 text-cyan-500"></i>
-                {{ followers }} seguidores
-              </span>
-              <span class="flex items-center">
-                <i class="fas fa-handshake mr-1 text-cyan-500"></i>
-                + de 500 conexões
-              </span>
-            </div>
-          </div>
-          
-          <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6 md:mt-8">
-            <a href="https://github.com/MateusOliveira-jesus" target="_blank"
-               class="bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-              <i class="fab fa-github mr-2"></i> GitHub
-            </a>
-        
-            <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
-               class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-              <i class="fab fa-linkedin mr-2"></i> LinkedIn
-            </a>
-        
-            <a href="mailto:mateus.oliveira.retiba@gmail.com"
-               class="bg-teal-600 hover:bg-teal-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-              <i class="fas fa-envelope mr-2"></i> E-mail
-            </a>
-
-            <a href="tel:+5511978678459"
-               class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-              <i class="fas fa-phone mr-2"></i> Telefone
-            </a>
-          </div>
-        </header>
-
-        <!-- Sobre Mim -->
-        <section v-if="showSections.sobre" class="mb-12 md:mb-16 fade-in bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl theme-transition card-hover" id="sobre">
-          <h2 class="text-2xl md:text-3xl font-bold mb-6 section-title">Sobre Mim</h2>
-          <div class="grid md:grid-cols-2 gap-8">
-            <div>
-              <p class="text-gray-600 dark:text-gray-300 text-justify leading-relaxed mb-6 text-break" v-html="highlightText(sobre)"></p>
-              
-              <!-- Principais Competências -->
-              <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-4 text-cyan-500">Principais Competências</h3>
-                <div class="flex flex-wrap gap-2">
-                  <span v-for="skill in principaisCompetencias" :key="skill" class="bg-white dark:bg-gray-700 text-cyan-600 dark:text-cyan-300 px-3 py-2 rounded-full text-sm theme-transition transform hover:scale-105 transition-transform duration-300 border border-gray-200 dark:border-gray-600">
-                    {{ skill }}
-                  </span>
+        <div class="main-container max-w-7xl mx-auto px-4 py-8">
+            <!-- Sidebar de Pesquisa e Navegação -->
+            <div class="sidebar p-6 border-r border-gray-200 dark:border-gray-700 theme-transition"
+                :class="{ 'open': sidebarOpen }">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-gray-800 dark:text-white">Navegação</h3>
+                    <button @click="sidebarOpen = false"
+                        class="md:hidden text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
                 </div>
-              </div>
 
-              <!-- Serviços -->
-              <div>
-                <h3 class="text-xl font-semibold mb-4 text-cyan-500">Serviços</h3>
-                <div class="flex flex-wrap gap-2">
-                  <span v-for="service in servicos" :key="service" class="bg-white dark:bg-gray-700 text-green-600 dark:text-green-400 px-3 py-2 rounded-full text-sm theme-transition transform hover:scale-105 transition-transform duration-300 border border-gray-200 dark:border-gray-600">
-                    {{ service }}
-                  </span>
+                <!-- Campo de Busca -->
+                <div class="relative mb-6">
+                    <input type="text" v-model="searchTerm" placeholder="Buscar no portfólio..."
+                        class="w-full px-4 py-3 pl-12 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent transition-all duration-300 text-break">
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <button v-if="searchTerm" @click="searchTerm = ''"
+                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-              </div>
-            </div>
-            <div class="flex flex-col justify-center">
-              <div class="mb-6">
-                <h3 class="text-xl font-semibold mb-4 text-cyan-500">Formação Acadêmica</h3>
-                <div class="space-y-4">
-                  <div v-for="edu in formacao" :key="edu.id" class="border-l-2 border-cyan-500 pl-4 transform hover:translate-x-2 transition-transform duration-300">
-                    <div class="flex items-start mb-2">
-                      <div class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                        <i :class="edu.icon" class="text-gray-600 dark:text-gray-400"></i>
-                      </div>
-                      <div>
-                        <h4 class="font-bold text-gray-800 dark:text-white text-break" v-html="highlightText(edu.curso)"></h4>
-                        <p class="text-gray-600 dark:text-gray-400 text-break" v-html="highlightText(edu.instituicao)"></p>
-                        <p class="text-sm text-gray-500 dark:text-gray-500">{{ edu.periodo }}</p>
-                      </div>
+
+                <!-- Resultados da Busca -->
+                <div v-if="searchResults.length > 0" class="mb-6">
+                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Resultados ({{ searchResults.length
+                        }})</h4>
+                    <div class="space-y-2 max-h-60 overflow-y-auto">
+                        <div v-for="result in searchResults" :key="result.id" @click="scrollToSection(result.section)"
+                            class="p-3 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-cyan-500 cursor-pointer transition-all duration-300 hover:shadow-md">
+                            <p class="text-sm font-medium text-gray-800 dark:text-white text-break">{{ result.title }}
+                            </p>
+                            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1 text-break">{{ result.preview }}</p>
+                        </div>
                     </div>
-                    <div class="flex flex-wrap gap-1 mt-2">
-                      <span v-for="tech in edu.competencias" :key="tech" class="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">
-                        {{ tech }}
-                      </span>
+                </div>
+
+                <!-- Navegação Rápida -->
+                <div class="mb-6">
+                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-4">Navegação Rápida</h4>
+                    <div class="space-y-2">
+                        <button v-for="nav in visibleNavigation" :key="nav.id" @click="scrollToSection(nav.id)"
+                            class="w-full text-left px-4 py-3 rounded-lg hover:bg-white dark:hover:bg-gray-700 transition-colors duration-200 flex items-center group">
+                            <i :class="nav.icon"
+                                class="mr-3 text-cyan-500 w-5 text-center group-hover:scale-110 transition-transform"></i>
+                            <span class="text-gray-700 dark:text-gray-300 font-medium">{{ nav.label }}</span>
+                        </button>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        <!-- Habilidades -->
-        <section v-if="showSections.habilidades" class="mb-12 md:mb-16 fade-in bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl theme-transition card-hover" id="habilidades">
-          <h2 class="text-2xl md:text-3xl font-bold mb-6 section-title">Principais Competências</h2>
-          <div class="content-grid-2">
-            <div v-for="skill in habilidades" :key="skill.id" class="mb-4 transform hover:scale-105 transition-transform duration-300">
-              <div class="flex justify-between mb-2">
-                <span class="font-medium text-gray-800 dark:text-white text-break" v-html="highlightText(skill.nome)"></span>
-                <span class="text-cyan-500 font-semibold">{{ skill.nivel }}%</span>
-              </div>
-              <div class="skill-bar">
-                <div class="skill-progress" :data-width="skill.nivel" :style="{'--skill-width': skill.nivel + '%'}"></div>
-              </div>
-            </div>
-          </div>
-        </section>
+                <!-- Estatísticas (LinkedIn Style) -->
+                <div class="p-4 bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600">
+                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Estatísticas</h4>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div class="stats-card">
+                            <div class="text-2xl font-bold text-cyan-500">{{ profileViews }}</div>
+                            <div class="text-gray-600 dark:text-gray-400 text-xs">Visualizações</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="text-2xl font-bold text-cyan-500">{{ postImpressions }}</div>
+                            <div class="text-gray-600 dark:text-gray-400 text-xs">Impressões</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="text-2xl font-bold text-cyan-500">{{ searchAppearances }}</div>
+                            <div class="text-gray-600 dark:text-gray-400 text-xs">Pesquisas</div>
+                        </div>
+                        <div class="stats-card">
+                            <div class="text-2xl font-bold text-cyan-500">{{ followers }}</div>
+                            <div class="text-gray-600 dark:text-gray-400 text-xs">Seguidores</div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Experiências Profissionais -->
-        <section v-if="showSections.experiencias" class="mb-12 md:mb-16 fade-in" id="experiencias">
-          <h2 class="text-2xl md:text-3xl font-bold mb-8 section-title">Experiência Profissional</h2>
-          <div class="space-y-6">
-            <div v-for="exp in experiencias" :key="exp.id" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl card-hover theme-transition border-l-4 border-cyan-500 equal-height">
-              <div class="flex flex-col md:flex-row items-start mb-4 md:justify-between md:items-start">
-                <div class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                  <i :class="exp.icon" class="text-gray-600 dark:text-gray-400 text-xl"></i>
+                <!-- Contatos Rápidos -->
+                <div class="mt-6">
+                    <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-3">Contato Rápido</h4>
+                    <div class="flex flex-col gap-2">
+                        <a href="https://github.com/MateusOliveira-jesus" target="_blank"
+                            class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
+                            <i class="fab fa-github mr-2"></i> GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
+                            class="bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
+                            <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                        </a>
+                        <a href="mailto:mateus.oliveira.retiba@gmail.com"
+                            class="bg-teal-600 hover:bg-teal-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
+                            <i class="fas fa-envelope mr-2"></i> E-mail
+                        </a>
+                        <a href="tel:+5511978678459"
+                            class="bg-green-600 hover:bg-green-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center">
+                            <i class="fas fa-phone mr-2"></i> (11) 97867-8459
+                        </a>
+                        <a href="https://wa.me/5511978678459"
+                            class="bg-green-600 hover:bg-green-500 text-white p-3 rounded-lg transition-colors flex items-center justify-center"
+                            target="_blank">
+                            <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                        </a>
+                    </div>
                 </div>
-                <div class="flex-1">
-                  <div class="flex flex-col md:flex-row md:justify-between md:items-start">
-                    <h3 class="text-xl font-bold text-gray-800 dark:text-white text-break" v-html="highlightText(exp.cargo)"></h3>
-                    <span class="text-cyan-500 font-medium bg-white dark:bg-gray-700 px-4 py-2 rounded-lg md:rounded-full text-sm mt-2 md:mt-0 theme-transition">{{ exp.periodo }}</span>
-                  </div>
-                  <p class="text-gray-600 dark:text-gray-400 text-lg mb-4 font-medium text-break" v-html="highlightText(exp.empresa)"></p>
-                  <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-break" v-html="highlightText(exp.descricao)"></p>
-                  <div class="mt-auto flex flex-wrap gap-2">
-                    <span v-for="tech in exp.tecnologias" :key="tech" class="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm theme-transition transform hover:scale-110 transition-transform duration-300 border border-gray-200 dark:border-gray-600">
-                      {{ tech }}
-                    </span>
-                  </div>
-                </div>
-              </div>
             </div>
-          </div>
-        </section>
 
-        <!-- Certificações -->
-        <section v-if="showSections.certificacoes" class="mb-12 md:mb-16 fade-in bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl theme-transition card-hover" id="certificacoes">
-          <h2 class="text-2xl md:text-3xl font-bold mb-6 section-title">Licenças e Certificados</h2>
-          <div class="content-grid-2">
-            <div v-for="cert in certificacoes" :key="cert.id" class="bg-white dark:bg-gray-700 p-6 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-cyan-500 transition theme-transition card-hover equal-height">
-              <div class="flex items-start mb-4">
-                <div class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
-                  <i :class="cert.icon" class="text-gray-600 dark:text-gray-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-bold text-lg mb-2 text-gray-800 dark:text-white text-break" v-html="highlightText(cert.titulo)"></h3>
-                  <p class="text-gray-600 dark:text-gray-400 mb-3 text-break" v-html="highlightText(cert.instituicao)"></p>
-                  <p class="text-gray-500 dark:text-gray-500 text-sm">{{ cert.periodo }}</p>
-                </div>
-              </div>
-              <div class="mt-auto flex flex-wrap gap-1">
-                <span v-for="tech in cert.competencias" :key="tech" class="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">
-                  {{ tech }}
-                </span>
-              </div>
+            <!-- Conteúdo Principal -->
+            <div class="content-area overflow-hidden">
+                <!-- Header -->
+                <header class="text-center mb-12 md:mb-16 fade-in py-8 md:py-12" id="inicio">
+                    <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-blue-500 text-break">
+                        {{ nome }}
+
+                    </h1>
+
+                    <div class="typing-container">
+                        <p
+                            class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-break typing-effect">
+                            {{ descricao }}
+                        </p>
+                    </div>
+
+                    <!-- Informações do LinkedIn -->
+                    <div class="mt-6 text-gray-600 dark:text-gray-400">
+                        <div class="flex flex-col sm:flex-row justify-center items-center gap-4 text-sm">
+                            <div class="flex items-center">
+                                <i class="fas fa-building mr-2 text-cyan-500"></i>
+                                <span>Universidade Santo Amaro - Unisa</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-graduation-cap mr-2 text-cyan-500"></i>
+                                <span>Estácio</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt mr-2 text-cyan-500"></i>
+                                <span>São Paulo, Brasil</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex justify-center gap-6 text-sm">
+                            <span class="flex items-center">
+                                <i class="fas fa-users mr-1 text-cyan-500"></i>
+                                {{ followers }} seguidores
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fas fa-handshake mr-1 text-cyan-500"></i>
+                                + de 500 conexões
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 justify-center mt-6 md:mt-8">
+                        <a href="https://github.com/MateusOliveira-jesus" target="_blank"
+                            class="bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+                            <i class="fab fa-github mr-2"></i> GitHub
+                        </a>
+
+                        <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
+                            class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+                            <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                        </a>
+
+                        <a href="mailto:mateus.oliveira.retiba@gmail.com"
+                            class="bg-teal-600 hover:bg-teal-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+                            <i class="fas fa-envelope mr-2"></i> E-mail
+                        </a>
+
+                        <a href="tel:+5511978678459"
+                            class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+                            <i class="fas fa-phone mr-2"></i> Telefone
+                        </a>
+                        <a href="https://wa.me/5511978678459"
+                            class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg transition flex items-center justify-center transform hover:scale-105 transition-transform duration-300"
+                            target="_blank">
+                            <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                        </a>
+                    </div>
+                </header>
+
+                <!-- Sobre Mim -->
+                <section v-if="showSections.sobre"
+                    class="mb-12 md:mb-16 fade-in bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl theme-transition card-hover"
+                    id="sobre">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 section-title">Sobre Mim</h2>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-gray-600 dark:text-gray-300 text-justify leading-relaxed mb-6 text-break"
+                                v-html="highlightText(sobre)"></p>
+
+                            <!-- Principais Competências -->
+                            <div class="mb-6">
+                                <h3 class="text-xl font-semibold mb-4 text-cyan-500">Principais Competências</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span v-for="skill in principaisCompetencias" :key="skill"
+                                        class="bg-white dark:bg-gray-700 text-cyan-600 dark:text-cyan-300 px-3 py-2 rounded-full text-sm theme-transition transform hover:scale-105 transition-transform duration-300 border border-gray-200 dark:border-gray-600">
+                                        {{ skill }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- Serviços -->
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4 text-cyan-500">Serviços</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <span v-for="service in servicos" :key="service"
+                                        class="bg-white dark:bg-gray-700 text-green-600 dark:text-green-400 px-3 py-2 rounded-full text-sm theme-transition transform hover:scale-105 transition-transform duration-300 border border-gray-200 dark:border-gray-600">
+                                        {{ service }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <div class="mb-6">
+                                <h3 class="text-xl font-semibold mb-4 text-cyan-500">Formação Acadêmica</h3>
+                                <div class="space-y-4">
+                                    <div v-for="edu in formacao" :key="edu.id"
+                                        class="border-l-2 border-cyan-500 pl-4 transform hover:translate-x-2 transition-transform duration-300">
+                                        <div class="flex items-start mb-2">
+                                            <div
+                                                class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                                                <i :class="edu.icon" class="text-gray-600 dark:text-gray-400"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="font-bold text-gray-800 dark:text-white text-break"
+                                                    v-html="highlightText(edu.curso)"></h4>
+                                                <p class="text-gray-600 dark:text-gray-400 text-break"
+                                                    v-html="highlightText(edu.instituicao)"></p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-500">{{ edu.periodo }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-wrap gap-1 mt-2">
+                                            <span v-for="tech in edu.competencias" :key="tech"
+                                                class="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">
+                                                {{ tech }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Habilidades -->
+                <section v-if="showSections.habilidades"
+                    class="mb-12 md:mb-16 fade-in bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl theme-transition card-hover"
+                    id="habilidades">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 section-title">Principais Competências</h2>
+                    <div class="content-grid-2">
+                        <div v-for="skill in habilidades" :key="skill.id"
+                            class="mb-4 transform hover:scale-105 transition-transform duration-300">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-800 dark:text-white text-break"
+                                    v-html="highlightText(skill.nome)"></span>
+                                <span class="text-cyan-500 font-semibold">{{ skill.nivel }}%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" :data-width="skill.nivel"
+                                    :style="{'--skill-width': skill.nivel + '%'}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Experiências Profissionais -->
+                <section v-if="showSections.experiencias" class="mb-12 md:mb-16 fade-in" id="experiencias">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-8 section-title">Experiência Profissional</h2>
+                    <div class="space-y-6">
+                        <div v-for="exp in experiencias" :key="exp.id"
+                            class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl card-hover theme-transition border-l-4 border-cyan-500 equal-height">
+                            <div class="flex flex-col md:flex-row items-start mb-4 md:justify-between md:items-start">
+                                <div class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                                    <i :class="exp.icon" class="text-gray-600 dark:text-gray-400 text-xl"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="flex flex-col md:flex-row md:justify-between md:items-start">
+                                        <h3 class="text-xl font-bold text-gray-800 dark:text-white text-break"
+                                            v-html="highlightText(exp.cargo)"></h3>
+                                        <span
+                                            class="text-cyan-500 font-medium bg-white dark:bg-gray-700 px-4 py-2 rounded-lg md:rounded-full text-sm mt-2 md:mt-0 theme-transition">{{
+                                            exp.periodo }}</span>
+                                    </div>
+                                    <p class="text-gray-600 dark:text-gray-400 text-lg mb-4 font-medium text-break"
+                                        v-html="highlightText(exp.empresa)"></p>
+                                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-break"
+                                        v-html="highlightText(exp.descricao)"></p>
+                                    <div class="mt-auto flex flex-wrap gap-2">
+                                        <span v-for="tech in exp.tecnologias" :key="tech"
+                                            class="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm theme-transition transform hover:scale-110 transition-transform duration-300 border border-gray-200 dark:border-gray-600">
+                                            {{ tech }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Certificações -->
+                <section v-if="showSections.certificacoes"
+                    class="mb-12 md:mb-16 fade-in bg-gray-50 dark:bg-gray-800 p-6 md:p-8 rounded-2xl theme-transition card-hover"
+                    id="certificacoes">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-6 section-title">Licenças e Certificados</h2>
+                    <div class="content-grid-2">
+                        <div v-for="cert in certificacoes" :key="cert.id"
+                            class="bg-white dark:bg-gray-700 p-6 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-cyan-500 transition theme-transition card-hover equal-height">
+                            <div class="flex items-start mb-4">
+                                <div class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
+                                    <i :class="cert.icon" class="text-gray-600 dark:text-gray-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg mb-2 text-gray-800 dark:text-white text-break"
+                                        v-html="highlightText(cert.titulo)"></h3>
+                                    <p class="text-gray-600 dark:text-gray-400 mb-3 text-break"
+                                        v-html="highlightText(cert.instituicao)"></p>
+                                    <p class="text-gray-500 dark:text-gray-500 text-sm">{{ cert.periodo }}</p>
+                                </div>
+                            </div>
+                            <div class="mt-auto flex flex-wrap gap-1">
+                                <span v-for="tech in cert.competencias" :key="tech"
+                                    class="bg-gray-100 dark:bg-gray-600 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">
+                                    {{ tech }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer -->
+                <footer
+                    class="text-center mt-12 pt-8 border-t border-gray-300 dark:border-gray-700 fade-in theme-transition">
+                    <p class="text-gray-600 dark:text-gray-400 text-lg">Entre em contato:</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4 mt-4">
+                        <a :href="'mailto:' + email" class="text-cyan-500 hover:text-cyan-400 underline transition">{{
+                            email }}</a>
+                        <a href="tel:+5511978678459" class="text-cyan-500 hover:text-cyan-400 underline transition">(11)
+                            97867-8459</a>
+                    </div>
+                    <p class="mt-6 text-gray-500 dark:text-gray-500 text-sm">
+                        &copy; {{ new Date().getFullYear() }} Mateus Oliveira. Todos os direitos reservados.
+                    </p>
+                </footer>
             </div>
-          </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="text-center mt-12 pt-8 border-t border-gray-300 dark:border-gray-700 fade-in theme-transition">
-          <p class="text-gray-600 dark:text-gray-400 text-lg">Entre em contato:</p>
-          <div class="flex flex-col sm:flex-row justify-center gap-4 mt-4">
-            <a :href="'mailto:' + email" class="text-cyan-500 hover:text-cyan-400 underline transition">{{ email }}</a>
-            <a href="tel:+5511978678459" class="text-cyan-500 hover:text-cyan-400 underline transition">(11) 97867-8459</a>
-          </div>
-          <p class="mt-6 text-gray-500 dark:text-gray-500 text-sm">
-            &copy; {{ new Date().getFullYear() }} Mateus Oliveira. Todos os direitos reservados.
-          </p>
-        </footer>
-      </div>
+        </div>
     </div>
-  </div>
 
-  <script>
-    const app = {
-      data() {
-        return {
-          isDarkMode: true,
-          sidebarOpen: false,
-          searchTerm: '',
-          nome: "Mateus Oliveira de Jesus",
-          descricao: "Full Stack Developer | PHP | JavaScript | MySQL | Laravel | Filament | Docker | Vue.js | Oracle | Gitlab | APIs RESTful | Performance & SEO",
-          email: "mateus.oliveira.retiba@gmail.com",
-          telefone: "(11) 97867-8459",
+    <script>
+        const app = {
+            data() {
+                return {
+                    isDarkMode: true,
+                    sidebarOpen: false,
+                    searchTerm: '',
+                    nome: "Mateus Oliveira de Jesus",
+                    descricao: "Full Stack Developer | PHP | JavaScript | MySQL | Laravel | Filament | Docker | Vue.js | Oracle | Gitlab | APIs RESTful | Performance & SEO",
+                    email: "mateus.oliveira.retiba@gmail.com",
+                    telefone: "(11) 97867-8459",
 
-          // Estatísticas do LinkedIn
-          profileViews: 27,
-          postImpressions: 510,
-          searchAppearances: 7,
-          followers: 952,
+                    // Estatísticas do LinkedIn
+                    profileViews: 27,
+                    postImpressions: 510,
+                    searchAppearances: 7,
+                    followers: 952,
 
-          // Controle de seções pelo código
-          showSections: {
-            sobre: true,
-            habilidades: true,
-            experiencias: true,
-            certificacoes: true,
-            projetos: true
-          },
+                    // Controle de seções pelo código
+                    showSections: {
+                        sobre: true,
+                        habilidades: true,
+                        experiencias: true,
+                        certificacoes: true,
+                        projetos: true
+                    },
 
-          navigation: [
-            { id: 'inicio', label: 'Início', icon: 'fas fa-home' },
-            { id: 'sobre', label: 'Sobre Mim', icon: 'fas fa-user' },
-            { id: 'habilidades', label: 'Habilidades', icon: 'fas fa-code' },
-            { id: 'experiencias', label: 'Experiências', icon: 'fas fa-briefcase' },
-            { id: 'certificacoes', label: 'Certificações', icon: 'fas fa-certificate' }
-          ],
+                    navigation: [
+                        { id: 'inicio', label: 'Início', icon: 'fas fa-home' },
+                        { id: 'sobre', label: 'Sobre Mim', icon: 'fas fa-user' },
+                        { id: 'habilidades', label: 'Habilidades', icon: 'fas fa-code' },
+                        { id: 'experiencias', label: 'Experiências', icon: 'fas fa-briefcase' },
+                        { id: 'certificacoes', label: 'Certificações', icon: 'fas fa-certificate' }
+                    ],
 
-          sobre: "Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa), onde contribuo para a criação de aplicações web utilizando PHP, Laravel, Filament, Vue.js e bancos de dados Oracle. Minha atuação inclui a integração de APIs RESTful, criação e manutenção de sistemas administrativos interno. Cursando Análise e Desenvolvimento de Sistemas na Estácio, busco aprimorar continuamente minhas habilidades em desenvolvimento centrado no usuário e metodologias ágeis como Scrum e Kanban. Valorizo a colaboração em equipe e o aprendizado contínuo para entregar soluções escaláveis e de qualidade.",
+                    sobre: "Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa), onde contribuo para a criação de aplicações web utilizando PHP, Laravel, Filament, Vue.js e bancos de dados Oracle. Minha atuação inclui a integração de APIs RESTful, criação e manutenção de sistemas administrativos interno. Cursando Análise e Desenvolvimento de Sistemas na Estácio, busco aprimorar continuamente minhas habilidades em desenvolvimento centrado no usuário e metodologias ágeis como Scrum e Kanban. Valorizo a colaboração em equipe e o aprendizado contínuo para entregar soluções escaláveis e de qualidade.",
 
-          principaisCompetencias: ["JavaScript", "SQL", "HTML5", "PHP", "CSS"],
-          servicos: ["Desenvolvimento web", "Teste de software"],
+                    principaisCompetencias: ["JavaScript", "SQL", "HTML5", "PHP", "CSS"],
+                    servicos: ["Desenvolvimento web", "Teste de software"],
 
-          formacao: [
-            {
-              id: 1,
-              curso: "Análise e Desenvolvimento de Sistemas",
-              instituicao: "Estácio",
-              periodo: "jan de 2023 - nov de 2025",
-              icon: "fas fa-university",
-              competencias: ["C#", "PHP", "Java", "Python", "JavaScript", "SQL", "HTML", "CSS", "React", "Node.js"]
+                    formacao: [
+                        {
+                            id: 1,
+                            curso: "Análise e Desenvolvimento de Sistemas",
+                            instituicao: "Estácio",
+                            periodo: "jan de 2023 - nov de 2025",
+                            icon: "fas fa-university",
+                            competencias: ["C#", "PHP", "Java", "Python", "JavaScript", "SQL", "HTML", "CSS", "React", "Node.js"]
+                        },
+                        {
+                            id: 2,
+                            curso: "Analista de Sistemas",
+                            instituicao: "Udemy Alumni",
+                            periodo: "jun de 2022 - dez de 2022",
+                            icon: "fas fa-laptop-code",
+                            competencias: ["Controle e garantia de qualidade (QA/QC)", "Automação de QA", "Testes", "JavaScript", "Python", "SQL", "Git"]
+                        }
+                    ],
+
+                    habilidades: [
+                        { id: 1, nome: "PHP", nivel: 90 },
+                        { id: 2, nome: "Laravel", nivel: 85 },
+                        { id: 3, nome: "JavaScript", nivel: 80 },
+                        { id: 4, nome: "Vue.js", nivel: 75 },
+                        { id: 5, nome: "MySQL", nivel: 85 },
+                        { id: 6, nome: "Oracle", nivel: 80 },
+                        { id: 7, nome: "Docker", nivel: 70 },
+                        { id: 8, nome: "Git/GitLab", nivel: 80 },
+                        { id: 9, nome: "HTML5", nivel: 85 },
+                        { id: 10, nome: "CSS3", nivel: 80 },
+                        { id: 11, nome: "APIs RESTful", nivel: 75 },
+                        { id: 12, nome: "Filament", nivel: 70 }
+                    ],
+
+                    experiencias: [
+                        {
+                            id: 1,
+                            empresa: "Universidade Santo Amaro - Unisa",
+                            cargo: "Desenvolvedor Full Stack",
+                            periodo: "ago de 2025 - o momento · 4 meses",
+                            icon: "fas fa-university",
+                            descricao: "Desenvolvimento de sistemas internos com Laravel Filament Vue.js e Oracle. Integração de APIs automação de processos e criação de interfaces administrativas.",
+                            tecnologias: ["PHP", "Laravel", "Vue.js", "Filament", "Oracle", "Docker", "GitLab", "APIs RESTful"]
+                        },
+                        {
+                            id: 2,
+                            empresa: "Doutores da Web",
+                            cargo: "Desenvolvedor Fullstack PHP Pl.",
+                            periodo: "mar de 2025 - jul de 2025 · 5 meses",
+                            icon: "fas fa-code",
+                            descricao: "Desenvolvimento de aplicações web utilizando PHP, Laravel, HTML, CSS, JavaScript e Bootstrap. Implementação de testes automatizados com Cypress e testes manuais com Postman para validação de APIs. Integração de sistemas com bancos de dados MySQL e criação de APIs RESTful. Participação ativa em squads ágeis utilizando metodologias como Scrum e Kanban. Otimização de aplicações para performance, SEO e usabilidade.",
+                            tecnologias: ["PHP", "Laravel", "JavaScript", "MySQL", "Cypress", "SEO", "Bootstrap", "APIs RESTful"]
+                        },
+                        {
+                            id: 3,
+                            empresa: "Doutores da Web",
+                            cargo: "Desenvolvedor Fullstack PHP Jr.",
+                            periodo: "nov de 2023 - mar de 2025 · 1 ano 5 meses",
+                            icon: "fas fa-code",
+                            descricao: "Desenvolvimento e manutenção de sites com HTML5, CSS3, JavaScript e PHP. Trabalho com bancos de dados SQL e manipulação de JSON. Implementação de funcionalidades sob orientação de desenvolvedores sêniores. Correção de bugs e melhorias de layout responsivo. Validação de código seguindo padrões W3C e boas práticas de SEO. Uso de expressões regulares (Regex) para otimização de código.",
+                            tecnologias: ["PHP", "HTML5", "CSS3", "JavaScript", "MySQL", "SEO", "JSON", "Regex"]
+                        }
+                    ],
+
+                    certificacoes: [
+                        {
+                            id: 1,
+                            titulo: "Laravel",
+                            instituicao: "Udemy",
+                            periodo: "Emitido em jun de 2024",
+                            icon: "fas fa-certificate",
+                            competencias: ["Blade", "POO", "Eloquent", "MVC"]
+                        },
+                        {
+                            id: 2,
+                            titulo: "Criação de API Rest PHP",
+                            instituicao: "Udemy",
+                            periodo: "Emitido em abr de 2024",
+                            icon: "fas fa-certificate",
+                            competencias: ["Programação orientada a objetos (POO)", "Arquitetura MVC"]
+                        },
+                        {
+                            id: 3,
+                            titulo: "PHP Moderno",
+                            instituicao: "Curso Online",
+                            periodo: "2023",
+                            icon: "fas fa-certificate",
+                            competencias: ["PHP 8", "Composer", "PSR Standards"]
+                        },
+                        {
+                            id: 4,
+                            titulo: "HTML5 e CSS3",
+                            instituicao: "Curso Online",
+                            periodo: "2023",
+                            icon: "fas fa-certificate",
+                            competencias: ["HTML5", "CSS3", "Responsive Design"]
+                        }
+                    ]
+                }
             },
-            {
-              id: 2,
-              curso: "Analista de Sistemas",
-              instituicao: "Udemy Alumni",
-              periodo: "jun de 2022 - dez de 2022",
-              icon: "fas fa-laptop-code",
-              competencias: ["Controle e garantia de qualidade (QA/QC)", "Automação de QA", "Testes", "JavaScript", "Python", "SQL", "Git"]
+            computed: {
+                themeIcon() {
+                    return this.isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+                },
+                visibleNavigation() {
+                    return this.navigation.filter(nav =>
+                        nav.id === 'inicio' || this.showSections[nav.id]
+                    );
+                },
+                searchResults() {
+                    if (!this.searchTerm.trim()) return [];
+
+                    const term = this.searchTerm.toLowerCase();
+                    const results = [];
+
+                    // Buscar em sobre
+                    if (this.showSections.sobre && this.sobre.toLowerCase().includes(term)) {
+                        results.push({
+                            id: 'sobre',
+                            section: 'sobre',
+                            title: 'Sobre Mim',
+                            preview: this.getPreview(this.sobre, term)
+                        });
+                    }
+
+                    // Buscar em habilidades
+                    if (this.showSections.habilidades) {
+                        this.habilidades.forEach(skill => {
+                            if (skill.nome.toLowerCase().includes(term)) {
+                                results.push({
+                                    id: `skill-${skill.id}`,
+                                    section: 'habilidades',
+                                    title: `Habilidade: ${skill.nome}`,
+                                    preview: `Nível: ${skill.nivel}%`
+                                });
+                            }
+                        });
+                    }
+
+                    // Buscar em experiências
+                    if (this.showSections.experiencias) {
+                        this.experiencias.forEach(exp => {
+                            if (exp.cargo.toLowerCase().includes(term) ||
+                                exp.empresa.toLowerCase().includes(term) ||
+                                exp.descricao.toLowerCase().includes(term)) {
+                                results.push({
+                                    id: `exp-${exp.id}`,
+                                    section: 'experiencias',
+                                    title: `${exp.cargo} - ${exp.empresa}`,
+                                    preview: this.getPreview(exp.descricao, term)
+                                });
+                            }
+                        });
+                    }
+
+                    // Buscar em certificações
+                    if (this.showSections.certificacoes) {
+                        this.certificacoes.forEach(cert => {
+                            if (cert.titulo.toLowerCase().includes(term) ||
+                                cert.instituicao.toLowerCase().includes(term)) {
+                                results.push({
+                                    id: `cert-${cert.id}`,
+                                    section: 'certificacoes',
+                                    title: `Certificação: ${cert.titulo}`,
+                                    preview: cert.instituicao
+                                });
+                            }
+                        });
+                    }
+
+                    return results;
+                }
+            },
+            methods: {
+                toggleTheme() {
+                    this.isDarkMode = !this.isDarkMode;
+
+                    if (this.isDarkMode) {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+                },
+
+                scrollToSection(sectionId) {
+                    const element = document.getElementById(sectionId);
+                    if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                        this.sidebarOpen = false;
+                    }
+                },
+
+                highlightText(text) {
+                    if (!this.searchTerm.trim()) return text;
+
+                    const term = this.searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    const regex = new RegExp(`(${term})`, 'gi');
+
+                    return text.replace(regex, '<span class="search-highlight">$1</span>');
+                },
+
+                getPreview(text, term) {
+                    const index = text.toLowerCase().indexOf(term);
+                    if (index === -1) return text.substring(0, 100) + '...';
+
+                    const start = Math.max(0, index - 30);
+                    const end = Math.min(text.length, index + term.length + 70);
+                    let preview = text.substring(start, end);
+
+                    if (start > 0) preview = '...' + preview;
+                    if (end < text.length) preview = preview + '...';
+
+                    return preview;
+                },
+
+                initAnimations() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    document.querySelectorAll('.fade-in').forEach(el => {
+                        observer.observe(el);
+                    });
+                },
+
+                animateSkillBars() {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const progressBars = entry.target.querySelectorAll('.skill-progress');
+                                progressBars.forEach(bar => {
+                                    bar.classList.remove('animated');
+                                    void bar.offsetWidth;
+                                    setTimeout(() => {
+                                        bar.classList.add('animated');
+                                    }, 100);
+                                });
+                            }
+                        });
+                    }, { threshold: 0.5 });
+
+                    const habilidadesSection = document.getElementById('habilidades');
+                    if (habilidadesSection) {
+                        observer.observe(habilidadesSection);
+                    }
+                }
+            },
+            mounted() {
+                const savedTheme = localStorage.getItem('theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+                if (savedTheme) {
+                    this.isDarkMode = savedTheme === 'dark';
+                } else {
+                    this.isDarkMode = systemPrefersDark;
+                }
+
+                if (this.isDarkMode) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+
+                this.initAnimations();
+                this.animateSkillBars();
+
+                setTimeout(() => {
+                    const typingElement = document.querySelector('.typing-effect');
+                    if (typingElement) {
+                        typingElement.style.animation = 'none';
+                        typingElement.style.borderRight = 'none';
+                    }
+                }, 4000);
             }
-          ],
+        }
 
-          habilidades: [
-            { id: 1, nome: "PHP", nivel: 90 },
-            { id: 2, nome: "Laravel", nivel: 85 },
-            { id: 3, nome: "JavaScript", nivel: 80 },
-            { id: 4, nome: "Vue.js", nivel: 75 },
-            { id: 5, nome: "MySQL", nivel: 85 },
-            { id: 6, nome: "Oracle", nivel: 80 },
-            { id: 7, nome: "Docker", nivel: 70 },
-            { id: 8, nome: "Git/GitLab", nivel: 80 },
-            { id: 9, nome: "HTML5", nivel: 85 },
-            { id: 10, nome: "CSS3", nivel: 80 },
-            { id: 11, nome: "APIs RESTful", nivel: 75 },
-            { id: 12, nome: "Filament", nivel: 70 }
-          ],
-
-          experiencias: [
-            {
-              id: 1,
-              empresa: "Universidade Santo Amaro - Unisa",
-              cargo: "Desenvolvedor Full Stack",
-              periodo: "ago de 2025 - o momento · 4 meses",
-              icon: "fas fa-university",
-              descricao: "Desenvolvimento de sistemas internos com Laravel Filament Vue.js e Oracle. Integração de APIs automação de processos e criação de interfaces administrativas.",
-              tecnologias: ["PHP", "Laravel", "Vue.js", "Filament", "Oracle", "Docker", "GitLab", "APIs RESTful"]
-            },
-            {
-              id: 2,
-              empresa: "Doutores da Web",
-              cargo: "Desenvolvedor Fullstack PHP Pl.",
-              periodo: "mar de 2025 - jul de 2025 · 5 meses",
-              icon: "fas fa-code",
-              descricao: "Desenvolvimento de aplicações web utilizando PHP, Laravel, HTML, CSS, JavaScript e Bootstrap. Implementação de testes automatizados com Cypress e testes manuais com Postman para validação de APIs. Integração de sistemas com bancos de dados MySQL e criação de APIs RESTful. Participação ativa em squads ágeis utilizando metodologias como Scrum e Kanban. Otimização de aplicações para performance, SEO e usabilidade.",
-              tecnologias: ["PHP", "Laravel", "JavaScript", "MySQL", "Cypress", "SEO", "Bootstrap", "APIs RESTful"]
-            },
-            {
-              id: 3,
-              empresa: "Doutores da Web",
-              cargo: "Desenvolvedor Fullstack PHP Jr.",
-              periodo: "nov de 2023 - mar de 2025 · 1 ano 5 meses",
-              icon: "fas fa-code",
-              descricao: "Desenvolvimento e manutenção de sites com HTML5, CSS3, JavaScript e PHP. Trabalho com bancos de dados SQL e manipulação de JSON. Implementação de funcionalidades sob orientação de desenvolvedores sêniores. Correção de bugs e melhorias de layout responsivo. Validação de código seguindo padrões W3C e boas práticas de SEO. Uso de expressões regulares (Regex) para otimização de código.",
-              tecnologias: ["PHP", "HTML5", "CSS3", "JavaScript", "MySQL", "SEO", "JSON", "Regex"]
-            }
-          ],
-
-          certificacoes: [
-            {
-              id: 1,
-              titulo: "Laravel",
-              instituicao: "Udemy",
-              periodo: "Emitido em jun de 2024",
-              icon: "fas fa-certificate",
-              competencias: ["Blade", "POO", "Eloquent", "MVC"]
-            },
-            {
-              id: 2,
-              titulo: "Criação de API Rest PHP",
-              instituicao: "Udemy",
-              periodo: "Emitido em abr de 2024",
-              icon: "fas fa-certificate",
-              competencias: ["Programação orientada a objetos (POO)", "Arquitetura MVC"]
-            },
-            {
-              id: 3,
-              titulo: "PHP Moderno",
-              instituicao: "Curso Online",
-              periodo: "2023",
-              icon: "fas fa-certificate",
-              competencias: ["PHP 8", "Composer", "PSR Standards"]
-            },
-            {
-              id: 4,
-              titulo: "HTML5 e CSS3",
-              instituicao: "Curso Online",
-              periodo: "2023",
-              icon: "fas fa-certificate",
-              competencias: ["HTML5", "CSS3", "Responsive Design"]
-            }
-          ]
-        }
-      },
-      computed: {
-        themeIcon() {
-          return this.isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
-        },
-        visibleNavigation() {
-          return this.navigation.filter(nav => 
-            nav.id === 'inicio' || this.showSections[nav.id]
-          );
-        },
-        searchResults() {
-          if (!this.searchTerm.trim()) return [];
-          
-          const term = this.searchTerm.toLowerCase();
-          const results = [];
-          
-          // Buscar em sobre
-          if (this.showSections.sobre && this.sobre.toLowerCase().includes(term)) {
-            results.push({
-              id: 'sobre',
-              section: 'sobre',
-              title: 'Sobre Mim',
-              preview: this.getPreview(this.sobre, term)
-            });
-          }
-          
-          // Buscar em habilidades
-          if (this.showSections.habilidades) {
-            this.habilidades.forEach(skill => {
-              if (skill.nome.toLowerCase().includes(term)) {
-                results.push({
-                  id: `skill-${skill.id}`,
-                  section: 'habilidades',
-                  title: `Habilidade: ${skill.nome}`,
-                  preview: `Nível: ${skill.nivel}%`
-                });
-              }
-            });
-          }
-          
-          // Buscar em experiências
-          if (this.showSections.experiencias) {
-            this.experiencias.forEach(exp => {
-              if (exp.cargo.toLowerCase().includes(term) || 
-                  exp.empresa.toLowerCase().includes(term) ||
-                  exp.descricao.toLowerCase().includes(term)) {
-                results.push({
-                  id: `exp-${exp.id}`,
-                  section: 'experiencias',
-                  title: `${exp.cargo} - ${exp.empresa}`,
-                  preview: this.getPreview(exp.descricao, term)
-                });
-              }
-            });
-          }
-          
-          // Buscar em certificações
-          if (this.showSections.certificacoes) {
-            this.certificacoes.forEach(cert => {
-              if (cert.titulo.toLowerCase().includes(term) || 
-                  cert.instituicao.toLowerCase().includes(term)) {
-                results.push({
-                  id: `cert-${cert.id}`,
-                  section: 'certificacoes',
-                  title: `Certificação: ${cert.titulo}`,
-                  preview: cert.instituicao
-                });
-              }
-            });
-          }
-          
-          return results;
-        }
-      },
-      methods: {
-        toggleTheme() {
-          this.isDarkMode = !this.isDarkMode;
-          
-          if (this.isDarkMode) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-          }
-        },
-        
-        scrollToSection(sectionId) {
-          const element = document.getElementById(sectionId);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-            this.sidebarOpen = false;
-          }
-        },
-        
-        highlightText(text) {
-          if (!this.searchTerm.trim()) return text;
-          
-          const term = this.searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-          const regex = new RegExp(`(${term})`, 'gi');
-          
-          return text.replace(regex, '<span class="search-highlight">$1</span>');
-        },
-        
-        getPreview(text, term) {
-          const index = text.toLowerCase().indexOf(term);
-          if (index === -1) return text.substring(0, 100) + '...';
-          
-          const start = Math.max(0, index - 30);
-          const end = Math.min(text.length, index + term.length + 70);
-          let preview = text.substring(start, end);
-          
-          if (start > 0) preview = '...' + preview;
-          if (end < text.length) preview = preview + '...';
-          
-          return preview;
-        },
-        
-        initAnimations() {
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-              }
-            });
-          }, { threshold: 0.1 });
-          
-          document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-          });
-        },
-        
-        animateSkillBars() {
-          const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                const progressBars = entry.target.querySelectorAll('.skill-progress');
-                progressBars.forEach(bar => {
-                  bar.classList.remove('animated');
-                  void bar.offsetWidth;
-                  setTimeout(() => {
-                    bar.classList.add('animated');
-                  }, 100);
-                });
-              }
-            });
-          }, { threshold: 0.5 });
-          
-          const habilidadesSection = document.getElementById('habilidades');
-          if (habilidadesSection) {
-            observer.observe(habilidadesSection);
-          }
-        }
-      },
-      mounted() {
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        if (savedTheme) {
-          this.isDarkMode = savedTheme === 'dark';
-        } else {
-          this.isDarkMode = systemPrefersDark;
-        }
-        
-        if (this.isDarkMode) {
-          document.documentElement.classList.add('dark');
-        } else {
-          document.documentElement.classList.remove('dark');
-        }
-        
-        this.initAnimations();
-        this.animateSkillBars();
-        
-        setTimeout(() => {
-          const typingElement = document.querySelector('.typing-effect');
-          if (typingElement) {
-            typingElement.style.animation = 'none';
-            typingElement.style.borderRight = 'none';
-          }
-        }, 4000);
-      }
-    }
-    
-    Vue.createApp(app).mount("#app");
-  </script>
+        Vue.createApp(app).mount("#app");
+    </script>
 </body>
+
 </html>
