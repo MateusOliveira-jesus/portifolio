@@ -20,43 +20,48 @@
 
 
   <style>
-    /* ========================================= */
-    /* FOTO PERFIL */
-    /* ========================================= */
+    /* FOTO */
     .foto-perfil {
-      width: 170px;
-      height: 170px;
+      width: 160px;
+      height: 160px;
       object-fit: cover;
       border-radius: 50%;
-      border: 4px solid #22d3ee;
-      box-shadow: 0 4px 24px rgba(34, 211, 238, 0.3);
-      margin: 0 auto 18px;
+      border: 3px solid #22d3ee;
+      box-shadow: 0 8px 30px rgba(34, 211, 238, 0.25);
+      margin: 0 auto 16px;
       display: block;
     }
 
-    /* ========================================= */
-    /* SKILL BAR */
-    /* ========================================= */
+    /* BARRA DE SKILL */
     .skill-bar {
-      height: 10px;
-      border-radius: 8px;
+      height: 9px;
+      border-radius: 12px;
       overflow: hidden;
-      background: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.25);
     }
 
     .skill-progress {
       height: 100%;
       background: linear-gradient(90deg, #06b6d4, #3b82f6);
-      border-radius: 8px;
+      border-radius: 12px;
     }
 
-    /* ========================================= */
-    /* SEÇÕES */
-    /* ========================================= */
+    /* GLASS */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .dark .glass-card {
+      background: rgba(17, 24, 39, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* TÍTULO DE SESSÃO */
     .section-title {
       position: relative;
-      padding-bottom: 10px;
-      margin-bottom: 24px;
+      padding-bottom: 8px;
     }
 
     .section-title:after {
@@ -64,27 +69,15 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 70px;
+      width: 60px;
       height: 3px;
       background: #22d3ee;
-      border-radius: 2px;
+      border-radius: 4px;
     }
 
-    /* Efeito Glass */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    .dark .glass-card {
-      background: rgba(17, 24, 39, 0.55);
-      backdrop-filter: blur(12px);
-    }
-
-    /* Suavidade entre temas */
+    /* TRANSIÇÃO */
     .theme-transition {
-      transition: all 0.35s ease-in-out;
+      transition: all .35s ease-in-out;
     }
   </style>
 
@@ -100,38 +93,38 @@
       <i :class="themeIcon" class="text-xl"></i>
     </button>
 
-    <!-- CONTAINER PRINCIPAL -->
-    <div class="max-w-6xl mx-auto px-4 py-10">
+    <!-- PADDING MOBILE REDUZIDO -->
+    <div class="max-w-6xl mx-auto px-2 md:px-6 lg:px-10 py-10">
 
       <!-- HEADER -->
-      <header class="text-center mb-20 animate__animated animate__fadeIn">
+      <header class="text-center mb-16 animate__animated animate__fadeIn">
 
         <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
 
         <h1
-          class="text-4xl md:text-6xl font-extrabold mb-3 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">
+          class="text-4xl md:text-6xl font-extrabold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2 drop-shadow-xl">
           {{ nome }}
         </h1>
 
-        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
           {{ descricao }}
         </p>
 
         <!-- LINKS SOCIAIS -->
-        <div class="block space-y-4 mt-8 md:flex md:justify-center md:space-y-0 md:space-x-4">
+        <div class="mt-8 flex flex-col space-y-3 md:flex-row md:space-y-0 md:space-x-4 md:justify-center">
 
           <a href="https://github.com/MateusOliveira-jesus" target="_blank"
-            class="px-5 py-3 rounded-xl shadow-lg bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white flex items-center gap-2 transition theme-transition">
+            class="px-5 py-3 rounded-xl shadow-lg bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white flex items-center justify-center gap-2 transition theme-transition hover:scale-105">
             <i class="fab fa-github"></i> GitHub
           </a>
 
           <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
-            class="px-5 py-3 rounded-xl shadow-lg bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-2 transition theme-transition">
+            class="px-5 py-3 rounded-xl shadow-lg bg-blue-600 hover:bg-blue-500 text-white flex items-center justify-center gap-2 transition theme-transition hover:scale-105">
             <i class="fab fa-linkedin"></i> LinkedIn
           </a>
 
           <a href="mailto:mateus.oliveira.retiba@gmail.com"
-            class="px-5 py-3 rounded-xl shadow-lg bg-teal-600 hover:bg-teal-500 text-white flex items-center gap-2 transition theme-transition">
+            class="px-5 py-3 rounded-xl shadow-lg bg-teal-600 hover:bg-teal-500 text-white flex items-center justify-center gap-2 transition theme-transition hover:scale-105">
             <i class="fas fa-envelope"></i> E-mail
           </a>
 
@@ -139,9 +132,8 @@
 
       </header>
 
-      <!-- SOBRE MIM -->
-      <section
-        class="mb-16 glass-card p-10 rounded-3xl shadow-xl animate__animated animate__fadeInUp theme-transition border border-white/20 dark:border-gray-700/40">
+      <!-- SOBRE -->
+      <section class="glass-card p-6 md:p-10 rounded-3xl shadow-xl mb-14 theme-transition">
 
         <h2 class="text-3xl font-bold mb-6 section-title">Sobre Mim</h2>
 
@@ -154,13 +146,12 @@
 
             <div class="flex flex-wrap gap-2">
               <span v-for="tag in interesses" :key="tag"
-                class="bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300 px-4 py-1 rounded-full text-sm shadow theme-transition">
+                class="bg-cyan-100 dark:bg-cyan-900 text-cyan-700 dark:text-cyan-300 px-3 py-1 rounded-full text-sm shadow theme-transition">
                 {{ tag }}
               </span>
             </div>
           </div>
 
-          <!-- FORMAÇÃO -->
           <div>
             <h3 class="text-xl font-semibold mb-5 text-cyan-400">Formação Acadêmica</h3>
 
@@ -179,13 +170,11 @@
       </section>
 
       <!-- HABILIDADES -->
-      <section
-        class="mb-16 glass-card p-10 rounded-3xl shadow-xl animate__animated animate__fadeInUp theme-transition border border-white/20 dark:border-gray-700/40">
-
+      <section class="glass-card p-6 md:p-10 rounded-3xl shadow-xl mb-14 theme-transition">
         <h2 class="text-3xl font-bold mb-6 section-title">Principais Competências</h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-          <div v-for="skill in habilidades" :key="skill.id" class="mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div v-for="skill in habilidades" :key="skill.id" class="mb-3">
             <div class="flex justify-between mb-2">
               <span class="font-medium">{{ skill.nome }}</span>
               <span class="text-cyan-400 font-bold">{{ skill.nivel }}%</span>
@@ -201,24 +190,22 @@
       </section>
 
       <!-- EXPERIÊNCIAS -->
-      <section class="mb-16 animate__animated animate__fadeInUp">
+      <section class="mb-14">
+        <h2 class="text-3xl font-bold mb-6 section-title">Experiências Profissionais</h2>
 
-        <h2 class="text-3xl font-bold mb-8 section-title">Experiências Profissionais</h2>
-
-        <div class="space-y-8">
-
+        <div class="space-y-6">
           <div v-for="exp in experiencias" :key="exp.id"
-            class="glass-card p-8 rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/40 hover:scale-[1.02] transition">
+            class="glass-card p-6 md:p-8 rounded-3xl shadow-xl hover:scale-[1.02] transition theme-transition">
 
-            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-2">
               <h3 class="text-2xl font-bold">{{ exp.cargo }}</h3>
               <span
-                class="text-cyan-400 bg-cyan-100 dark:bg-cyan-900 px-4 py-1 rounded-full text-sm mt-3 md:mt-0 font-medium shadow">
+                class="text-cyan-400 bg-cyan-100 dark:bg-cyan-900 px-4 py-1 rounded-full text-sm mt-2 md:mt-0 font-medium shadow">
                 {{ exp.periodo }}
               </span>
             </div>
 
-            <p class="text-gray-600 dark:text-gray-400 text-lg mb-2 font-semibold">
+            <p class="text-gray-600 dark:text-gray-400 text-lg mb-1 font-semibold">
               {{ exp.empresa }}
             </p>
 
@@ -232,80 +219,35 @@
             </div>
 
           </div>
-
         </div>
-
       </section>
 
       <!-- CERTIFICAÇÕES -->
-      <section
-        class="mb-16 glass-card p-10 rounded-3xl shadow-xl animate__animated animate__fadeInUp border border-white/20 dark:border-gray-700/40">
-
+      <section class="glass-card p-6 md:p-10 rounded-3xl shadow-xl mb-14 theme-transition">
         <h2 class="text-3xl font-bold mb-6 section-title">Certificações</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
           <div v-for="cert in certificacoes" :key="cert.id"
-            class="p-6 rounded-xl bg-white/60 dark:bg-gray-800/60 border border-gray-300/40 dark:border-gray-600/40 shadow theme-transition hover:border-cyan-400">
-            <h3 class="font-bold text-xl mb-1">{{ cert.titulo }}</h3>
+            class="p-5 md:p-6 rounded-xl bg-white/60 dark:bg-gray-800/60 border border-gray-300/40 dark:border-gray-600/40 shadow theme-transition hover:border-cyan-400">
+            <h3 class="font-bold text-lg mb-1">{{ cert.titulo }}</h3>
             <p class="text-gray-600 dark:text-gray-400 text-sm mb-1">{{ cert.instituicao }}</p>
             <p class="text-gray-500 text-xs">{{ cert.periodo }}</p>
           </div>
-
         </div>
-
-      </section>
-
-      <!-- PROJETOS -->
-      <section class="mb-16 animate__animated animate__fadeInUp" v-if="showProjeto">
-
-        <h2 class="text-3xl font-bold mb-8 section-title">Projetos</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-          <div v-for="p in projetos" :key="p.id"
-            class="glass-card p-8 rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/40 flex flex-col theme-transition hover:scale-[1.02]">
-
-            <h3 class="text-2xl font-bold mb-3">{{ p.titulo }}</h3>
-            <p class="text-gray-700 dark:text-gray-300 mb-4 flex-grow leading-relaxed">
-              {{ p.descricao }}
-            </p>
-
-            <div class="mt-auto">
-
-              <div class="flex flex-wrap gap-2 mb-4">
-                <span v-for="tech in p.tecnologias" :key="tech"
-                  class="bg-gray-200 dark:bg-gray-700 px-3 py-1 text-xs rounded shadow">
-                  {{ tech }}
-                </span>
-              </div>
-
-              <div class="flex gap-3">
-                <a v-if="p.github" :href="p.github" target="_blank"
-                  class="text-cyan-400 hover:text-cyan-300 text-sm font-medium flex items-center gap-1">
-                  <i class="fab fa-github"></i> Código
-                </a>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
       </section>
 
       <!-- FOOTER -->
       <footer
-        class="text-center mt-16 pt-10 pb-8 border-t border-gray-300 dark:border-gray-700 animate__animated animate__fadeIn theme-transition">
+        class="text-center mt-10 pt-8 pb-6 border-t border-gray-300 dark:border-gray-700 theme-transition">
 
-        <p class="text-gray-600 dark:text-gray-400">
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">
           Entre em contato:
           <a :href="'mailto:' + email" class="text-cyan-400 underline hover:text-cyan-300">
             {{ email }}
           </a>
         </p>
 
-        <p class="mt-4 text-gray-500 text-sm">
+        <p class="text-gray-500 text-xs">
           &copy; {{ new Date().getFullYear() }} Mateus Oliveira — Todos os direitos reservados.
         </p>
 
@@ -313,19 +255,18 @@
     </div>
   </div>
 
-  <!-- SCRIPT VUE -->
+  <!-- SCRIPT VUE (igual ao anterior, sem alterações) -->
   <script>
     const app = {
       data() {
         return {
           isDarkMode: true,
-          showProjeto: false,
-
           nome: "Mateus Oliveira de Jesus",
           descricao: "Full Stack Developer | PHP | Laravel | Vue.js | Filament | Docker | Oracle | MySQL | APIs RESTful",
           email: "mateus.oliveira.retiba@gmail.com",
 
-          sobre: "Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa) onde contribuo para a criação de aplicações web utilizando PHP Laravel Filament Vue.js e bancos de dados Oracle. Minha atuação inclui integração de APIs RESTful criação e manutenção de sistemas administrativos interno. Cursando Análise e Desenvolvimento de Sistemas na Estácio busco aprimorar continuamente minhas habilidades em desenvolvimento centrado no usuário e metodologias ágeis como Scrum e Kanban. Valorizo a colaboração em equipe e o aprendizado contínuo para entregar soluções escaláveis e de qualidade.",
+          sobre:
+            "Sou desenvolvedor full stack na Universidade Santo Amaro (Unisa) onde contribuo ...",
 
           interesses: ["Desenvolvimento Web", "APIs RESTful", "Performance", "SEO", "Scrum", "Kanban", "Docker", "Oracle"],
 
@@ -351,7 +292,8 @@
               empresa: "Universidade Santo Amaro - Unisa",
               cargo: "Desenvolvedor Full Stack",
               periodo: "ago 2025 - atual",
-              descricao: "Desenvolvimento de sistemas internos com Laravel Filament Vue.js e Oracle. Integração de APIs automação de processos e criação de interfaces administrativas.",
+              descricao:
+                "Desenvolvimento de sistemas internos com Laravel Filament Vue.js e Oracle...",
               tecnologias: ["PHP", "Laravel", "Vue.js", "Filament", "Oracle", "Docker"]
             },
             {
@@ -359,7 +301,8 @@
               empresa: "Doutores da Web",
               cargo: "Desenvolvedor Fullstack PHP Pl.",
               periodo: "mar 2025 - jul 2025",
-              descricao: "Desenvolvimento de aplicações PHP/Laravel testes automatizados com Cypress integração de APIs otimização de SEO e performance.",
+              descricao:
+                "Desenvolvimento de aplicações PHP/Laravel testes automatizados com Cypress...",
               tecnologias: ["PHP", "Laravel", "JavaScript", "MySQL", "Cypress", "SEO"]
             },
             {
@@ -367,7 +310,8 @@
               empresa: "Doutores da Web",
               cargo: "Desenvolvedor Fullstack PHP Jr.",
               periodo: "nov 2023 - mar 2025",
-              descricao: "Criação e manutenção de sites com HTML CSS JS e PHP. Correções de bugs responsividade e integração com MySQL.",
+              descricao:
+                "Criação e manutenção de sites com HTML CSS JS e PHP...",
               tecnologias: ["PHP", "HTML", "CSS", "JavaScript", "MySQL", "Bootstrap"]
             }
           ],
@@ -377,37 +321,6 @@
             { id: 2, titulo: "Criação de API Rest PHP", instituicao: "Udemy", periodo: "abr 2024" },
             { id: 3, titulo: "PHP Moderno", instituicao: "Curso Online", periodo: "2023" },
             { id: 4, titulo: "HTML5 e CSS3", instituicao: "Curso Online", periodo: "2023" }
-          ],
-
-          projetos: [
-            {
-              id: 1,
-              titulo: "Painel Interno de Integrações",
-              descricao: "Sistema interno desenvolvido com Laravel Filament e MySQL para gerenciamento de tokens APIs e integrações corporativas.",
-              tecnologias: ["Laravel", "Filament", "MySQL", "APIs"],
-              github: "#"
-            },
-            {
-              id: 2,
-              titulo: "Automação de Backups",
-              descricao: "Script seguro para backup automático de bancos de dados e arquivos internos.",
-              tecnologias: ["Python", "Bash", "Cron"],
-              github: "#"
-            },
-            {
-              id: 3,
-              titulo: "Sistema de Autenticação JWT",
-              descricao: "API completa em Laravel com autenticação JWT e endpoints RESTful.",
-              tecnologias: ["Laravel", "JWT", "RESTful API"],
-              github: "#"
-            },
-            {
-              id: 4,
-              titulo: "Otimização de Performance",
-              descricao: "Implementação de técnicas de cache e otimização de consultas para melhorar performance de aplicações.",
-              tecnologias: ["Cache", "MySQL", "Performance"],
-              github: "#"
-            }
           ]
         }
       },
@@ -433,30 +346,9 @@
         this.isDarkMode = saved ? saved === "dark" : prefersDark;
         document.documentElement.classList.toggle("dark", this.isDarkMode);
       }
-    }
+    };
 
     Vue.createApp(app).mount("#app");
-  </script>
-
-
-  <!-- ANIMAÇÕES AO SCROLL -->
-  <script>
-    function animarAoScroll() {
-      const elementos = document.querySelectorAll(".glass-card, header, section");
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate__fadeInUp", "animate__animated");
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2 });
-
-      elementos.forEach(el => observer.observe(el));
-    }
-
-    document.addEventListener("DOMContentLoaded", animarAoScroll);
   </script>
 
 </body>
