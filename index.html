@@ -407,6 +407,7 @@
           <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
           <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-blue-500 text-break">
             {{ nome }}
+            
           </h1>
           
           <div class="typing-container">
@@ -541,14 +542,14 @@
           <h2 class="text-2xl md:text-3xl font-bold mb-8 section-title">Experiência Profissional</h2>
           <div class="space-y-6">
             <div v-for="exp in experiencias" :key="exp.id" class="bg-gray-50 dark:bg-gray-800 p-6 rounded-xl card-hover theme-transition border-l-4 border-cyan-500 equal-height">
-              <div class="flex items-start mb-4">
+              <div class="flex flex-col md:flex-row items-start mb-4 md:justify-between md:items-start">
                 <div class="company-logo bg-gray-200 dark:bg-gray-600 flex items-center justify-center">
                   <i :class="exp.icon" class="text-gray-600 dark:text-gray-400 text-xl"></i>
                 </div>
                 <div class="flex-1">
                   <div class="flex flex-col md:flex-row md:justify-between md:items-start">
                     <h3 class="text-xl font-bold text-gray-800 dark:text-white text-break" v-html="highlightText(exp.cargo)"></h3>
-                    <span class="text-cyan-500 font-medium bg-white dark:bg-gray-700 px-4 py-2 rounded-full text-sm mt-2 md:mt-0 theme-transition">{{ exp.periodo }}</span>
+                    <span class="text-cyan-500 font-medium bg-white dark:bg-gray-700 px-4 py-2 rounded-lg md:rounded-full text-sm mt-2 md:mt-0 theme-transition">{{ exp.periodo }}</span>
                   </div>
                   <p class="text-gray-600 dark:text-gray-400 text-lg mb-4 font-medium text-break" v-html="highlightText(exp.empresa)"></p>
                   <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6 text-break" v-html="highlightText(exp.descricao)"></p>
