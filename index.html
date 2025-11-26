@@ -9,209 +9,125 @@
   <script>
     tailwind.config = {
       darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            'neutral': {
-              850: '#1f2937',
-            }
-          }
-        }
-      }
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    
     .foto-perfil {
-      width: 180px; 
-      height: 180px; 
+      width: 140px; 
+      height: 140px; 
       object-fit: cover;
       border-radius: 50%; 
       border: 4px solid #0ea5e9;
-      box-shadow: 0 8px 32px rgba(14, 165, 233, 0.25);
-      margin: 0 auto 24px; 
+      box-shadow: 0 4px 24px rgba(14, 165, 233, 0.3);
+      margin: 0 auto 16px; 
       display: block;
-      transition: all 0.3s ease;
     }
-    
-    .foto-perfil:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 40px rgba(14, 165, 233, 0.35);
-    }
-    
     .skill-bar {
       height: 8px;
-      border-radius: 8px;
+      border-radius: 4px;
       overflow: hidden;
-      background-color: #e5e7eb;
     }
-    
-    .dark .skill-bar {
-      background-color: #374151;
-    }
-    
     .skill-progress {
       height: 100%;
       background: linear-gradient(90deg, #0ea5e9, #3b82f6);
-      border-radius: 8px;
-      transition: width 1.5s ease-in-out;
+      border-radius: 4px;
     }
-    
     .section-title {
       position: relative;
-      padding-bottom: 12px;
-      margin-bottom: 32px;
-      font-weight: 700;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
     }
-    
     .section-title:after {
       content: '';
       position: absolute;
       bottom: 0;
       left: 0;
-      width: 70px;
-      height: 4px;
-      background: linear-gradient(90deg, #0ea5e9, #3b82f6);
+      width: 60px;
+      height: 3px;
+      background: #0ea5e9;
       border-radius: 2px;
     }
-    
     .theme-transition {
       transition: all 0.3s ease-in-out;
     }
     
-    .card-hover {
-      transition: all 0.3s ease;
-    }
-    
-    .card-hover:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-    
-    .dark .card-hover:hover {
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .tag {
-      transition: all 0.2s ease;
-    }
-    
-    .tag:hover {
-      transform: translateY(-2px);
-    }
-    
-    .timeline-item {
-      position: relative;
-      padding-left: 30px;
-    }
-    
-    .timeline-item:before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 8px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: #0ea5e9;
-    }
-    
-    .timeline-item:after {
-      content: '';
-      position: absolute;
-      left: 5px;
-      top: 25px;
-      width: 2px;
-      height: calc(100% - 10px);
-      background: #e5e7eb;
-    }
-    
-    .dark .timeline-item:after {
-      background: #4b5563;
-    }
-    
-    .timeline-item:last-child:after {
-      display: none;
-    }
-    
-    .social-btn {
-      transition: all 0.3s ease;
-    }
-    
-    .social-btn:hover {
-      transform: translateY(-3px);
+    /* Otimizações para mobile */
+    @media (max-width: 768px) {
+      .mobile-padding {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .mobile-py {
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+      }
+      .mobile-section-padding {
+        padding: 1.5rem;
+      }
+      .mobile-text-lg {
+        font-size: 1.125rem;
+      }
     }
   </style>
 </head>
-<body class="bg-white dark:bg-neutral-900 text-gray-800 dark:text-gray-200 theme-transition">
+<body class="bg-white dark:bg-gray-900 text-gray-800 dark:text-white theme-transition">
   <div id="app">
     <!-- Botão Toggle Theme -->
     <button 
       @click="toggleTheme" 
-      class="fixed top-6 right-6 z-50 w-12 h-12 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-cyan-500/20"
+      class="fixed top-4 right-4 z-50 w-10 h-10 md:w-12 md:h-12 rounded-full bg-cyan-500 hover:bg-cyan-600 dark:bg-cyan-600 dark:hover:bg-cyan-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
     >
-      <i :class="themeIcon" class="text-lg"></i>
+      <i :class="themeIcon" class="text-base md:text-lg"></i>
     </button>
 
-    <div class="max-w-6xl mx-auto px-4 py-12">
+    <div class="max-w-5xl mx-auto mobile-padding mobile-py">
       <!-- Header -->
-      <header class="text-center mb-20 animate__animated animate__fadeIn">
+      <header class="text-center mb-12 md:mb-16 animate__animated animate__fadeIn">
         <img src="IMG-20251123-WA0006.jpg" alt="Foto de Mateus Oliveira" class="foto-perfil">
-        <h1 class="text-4xl md:text-5xl font-bold mb-4 gradient-text">{{ nome }}</h1>
-        <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">{{ descricao }}</p>
+        <h1 class="text-3xl md:text-5xl font-bold mb-3 text-blue-500">{{ nome }}</h1>
+        <p class="mobile-text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">{{ descricao }}</p>
         
-        <div class="flex flex-col md:flex-row justify-center items-center gap-4 mt-8">
-          <a href="https://github.com/MateusOliveira-jesus" target="_blank"
-             class="social-btn bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-6 py-3 rounded-xl transition flex items-center shadow-md">
-              <i class="fab fa-github mr-3"></i> GitHub
-          </a>
-      
-          <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
-             class="social-btn bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl transition flex items-center shadow-md">
-              <i class="fab fa-linkedin mr-3"></i> LinkedIn
-          </a>
-      
-          <a href="mailto:mateus.oliveira.retiba@gmail.com"
-             class="social-btn bg-teal-600 hover:bg-teal-500 text-white px-6 py-3 rounded-xl transition flex items-center shadow-md">
-              <i class="fas fa-envelope mr-3"></i> E-mail
-          </a>
+         <div class="block space-y-3 md:space-y-0 mt-4 md:mt-6 md:flex md:justify-center md:space-x-4">
+            <a href="https://github.com/MateusOliveira-jesus" target="_blank"
+               class="bg-gray-800 hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition flex items-center justify-center">
+                <i class="fab fa-github mr-2"></i> GitHub
+            </a>
+        
+            <a href="https://www.linkedin.com/in/mateusoliveirajesus/" target="_blank"
+               class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition flex items-center justify-center">
+                <i class="fab fa-linkedin mr-2"></i> LinkedIn
+            </a>
+        
+            <a href="mailto:mateus.oliveira.retiba@gmail.com"
+               class="bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-lg transition flex items-center justify-center">
+                <i class="fas fa-envelope mr-2"></i> E-mail
+            </a>
         </div>
+
       </header>
 
       <!-- Sobre Mim -->
-      <section class="mb-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-800 dark:to-neutral-850 p-10 rounded-3xl animate__animated animate__fadeInUp theme-transition card-hover">
-        <h2 class="text-3xl font-bold mb-8 section-title">Sobre Mim</h2>
-        <div class="grid md:grid-cols-2 gap-10">
+      <section class="mb-12 md:mb-16 bg-gray-50 dark:bg-gray-800 mobile-section-padding md:p-8 rounded-2xl animate__animated animate__fadeInUp theme-transition">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 section-title">Sobre Mim</h2>
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
           <div>
-            <p class="text-gray-600 dark:text-gray-300 text-justify leading-relaxed mb-8 text-lg">{{ sobre }}</p>
-            <div class="flex flex-wrap gap-3">
-              <span v-for="tag in interesses" :key="tag" class="tag bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-full text-sm shadow-sm theme-transition border border-gray-200 dark:border-gray-600">
+            <p class="text-gray-600 dark:text-gray-300 text-justify leading-relaxed mb-4 md:mb-6">{{ sobre }}</p>
+            <div class="flex flex-wrap gap-2">
+              <span v-for="tag in interesses" :key="tag" class="bg-gray-200 dark:bg-gray-700 text-cyan-600 dark:text-cyan-300 px-3 py-1 rounded-full text-sm theme-transition">
                 {{ tag }}
               </span>
             </div>
           </div>
           <div class="flex flex-col justify-center">
-            <div>
-              <h3 class="text-xl font-semibold mb-6 text-cyan-500">Formação Acadêmica</h3>
-              <div class="space-y-6 timeline-item-container">
-                <div v-for="edu in formacao" :key="edu.id" class="timeline-item">
-                  <h4 class="font-bold text-gray-800 dark:text-white text-lg">{{ edu.curso }}</h4>
-                  <p class="text-gray-600 dark:text-gray-400 mt-1">{{ edu.instituicao }}</p>
-                  <p class="text-sm text-gray-500 dark:text-gray-500 mt-2">{{ edu.periodo }}</p>
+            <div class="mb-4 md:mb-6">
+              <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4 text-cyan-500">Formação Acadêmica</h3>
+              <div class="space-y-3 md:space-y-4">
+                <div v-for="edu in formacao" :key="edu.id" class="border-l-2 border-cyan-500 pl-3 md:pl-4">
+                  <h4 class="font-bold text-gray-800 dark:text-white">{{ edu.curso }}</h4>
+                  <p class="text-gray-600 dark:text-gray-400">{{ edu.instituicao }}</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-500">{{ edu.periodo }}</p>
                 </div>
               </div>
             </div>
@@ -220,15 +136,15 @@
       </section>
 
       <!-- Habilidades -->
-      <section class="mb-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-800 dark:to-neutral-850 p-10 rounded-3xl animate__animated animate__fadeInUp theme-transition card-hover">
-        <h2 class="text-3xl font-bold mb-8 section-title">Principais Competências</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div v-for="skill in habilidades" :key="skill.id" class="mb-6">
-            <div class="flex justify-between mb-3">
-              <span class="font-medium text-gray-800 dark:text-white text-lg">{{ skill.nome }}</span>
-              <span class="text-cyan-500 font-semibold">{{ skill.nivel }}%</span>
+      <section class="mb-12 md:mb-16 bg-gray-50 dark:bg-gray-800 mobile-section-padding md:p-8 rounded-2xl animate__animated animate__fadeInUp theme-transition">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 section-title">Principais Competências</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div v-for="skill in habilidades" :key="skill.id" class="mb-3 md:mb-4">
+            <div class="flex justify-between mb-2">
+              <span class="font-medium text-gray-800 dark:text-white">{{ skill.nome }}</span>
+              <span class="text-cyan-500">{{ skill.nivel }}%</span>
             </div>
-            <div class="skill-bar">
+            <div class="skill-bar bg-gray-300 dark:bg-gray-700">
               <div class="skill-progress" :style="{ width: skill.nivel + '%' }"></div>
             </div>
           </div>
@@ -236,18 +152,18 @@
       </section>
 
       <!-- Experiências Profissionais -->
-      <section class="mb-20 animate__animated animate__fadeInUp">
-        <h2 class="text-3xl font-bold mb-10 section-title">Experiências Profissionais</h2>
-        <div class="space-y-8">
-          <div v-for="exp in experiencias" :key="exp.id" class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-800 dark:to-neutral-850 p-8 rounded-2xl card-hover theme-transition border-l-4 border-cyan-500">
-            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
-              <h3 class="text-xl font-bold text-gray-800 dark:text-white">{{ exp.cargo }}</h3>
-              <span class="text-cyan-500 font-medium bg-white dark:bg-gray-700 px-4 py-2 rounded-full text-sm mt-2 md:mt-0 theme-transition shadow-sm">{{ exp.periodo }}</span>
+      <section class="mb-12 md:mb-16 animate__animated animate__fadeInUp">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 section-title">Experiências Profissionais</h2>
+        <div class="space-y-4 md:space-y-6">
+          <div v-for="exp in experiencias" :key="exp.id" class="bg-gray-50 dark:bg-gray-800 mobile-section-padding md:p-6 rounded-xl hover:scale-[1.02] transition duration-300 border-l-4 border-cyan-500 theme-transition">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-3">
+              <h3 class="text-lg md:text-xl font-bold text-gray-800 dark:text-white">{{ exp.cargo }}</h3>
+              <span class="text-cyan-500 font-medium bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-sm mt-2 md:mt-0 theme-transition">{{ exp.periodo }}</span>
             </div>
-            <p class="text-gray-600 dark:text-gray-400 text-lg mb-4 font-medium">{{ exp.empresa }}</p>
-            <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">{{ exp.descricao }}</p>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="tech in exp.tecnologias" :key="tech" class="tag bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm theme-transition shadow-sm border border-gray-200 dark:border-gray-600">
+            <p class="text-gray-600 dark:text-gray-400 mobile-text-lg md:text-lg mb-3 md:mb-4">{{ exp.empresa }}</p>
+            <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ exp.descricao }}</p>
+            <div class="mt-3 md:mt-4 flex flex-wrap gap-2">
+              <span v-for="tech in exp.tecnologias" :key="tech" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs theme-transition">
                 {{ tech }}
               </span>
             </div>
@@ -256,36 +172,36 @@
       </section>
 
       <!-- Certificações -->
-      <section class="mb-20 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-800 dark:to-neutral-850 p-10 rounded-3xl animate__animated animate__fadeInUp theme-transition card-hover">
-        <h2 class="text-3xl font-bold mb-8 section-title">Certificações</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div v-for="cert in certificacoes" :key="cert.id" class="bg-white dark:bg-gray-700 p-6 rounded-xl border border-gray-200 dark:border-gray-600 hover:border-cyan-500 transition theme-transition card-hover">
-            <h3 class="font-bold text-lg mb-2 text-gray-800 dark:text-white">{{ cert.titulo }}</h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-3">{{ cert.instituicao }}</p>
-            <p class="text-gray-500 dark:text-gray-500 text-sm">{{ cert.periodo }}</p>
+      <section class="mb-12 md:mb-16 bg-gray-50 dark:bg-gray-800 mobile-section-padding md:p-8 rounded-2xl animate__animated animate__fadeInUp theme-transition">
+        <h2 class="text-2xl md:text-3xl font-bold mb-4 md:mb-6 section-title">Certificações</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div v-for="cert in certificacoes" :key="cert.id" class="bg-gray-200 dark:bg-gray-700 mobile-section-padding md:p-4 rounded-lg border border-gray-300 dark:border-gray-600 hover:border-cyan-500 transition theme-transition">
+            <h3 class="font-bold text-base md:text-lg mb-1 text-gray-800 dark:text-white">{{ cert.titulo }}</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">{{ cert.instituicao }}</p>
+            <p class="text-gray-500 dark:text-gray-500 text-xs">{{ cert.periodo }}</p>
           </div>
         </div>
       </section>
 
       <!-- Projetos -->
-      <section class="mb-20 animate__animated animate__fadeInUp" v-if="showProjeto">
-        <h2 class="text-3xl font-bold mb-10 section-title">Projetos</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div v-for="p in projetos" :key="p.id" class="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-neutral-800 dark:to-neutral-850 p-8 rounded-2xl card-hover transition duration-300 h-full flex flex-col theme-transition">
-            <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">{{ p.titulo }}</h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-6 flex-grow leading-relaxed">{{ p.descricao }}</p>
+      <section class="mb-12 md:mb-16 animate__animated animate__fadeInUp" v-if="showProjeto">
+        <h2 class="text-2xl md:text-3xl font-bold mb-6 md:mb-8 section-title">Projetos</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <div v-for="p in projetos" :key="p.id" class="bg-gray-50 dark:bg-gray-800 mobile-section-padding md:p-6 rounded-xl hover:scale-[1.02] transition duration-300 h-full flex flex-col theme-transition">
+            <h3 class="text-lg md:text-xl font-bold mb-3 text-gray-800 dark:text-white">{{ p.titulo }}</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-3 md:mb-4 flex-grow">{{ p.descricao }}</p>
             <div class="mt-auto">
-              <div class="flex flex-wrap gap-2 mb-6">
-                <span v-for="tech in p.tecnologias" :key="tech" class="tag bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-2 rounded-lg text-sm theme-transition shadow-sm border border-gray-200 dark:border-gray-600">
+              <div class="flex flex-wrap gap-2 mb-3 md:mb-4">
+                <span v-for="tech in p.tecnologias" :key="tech" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs theme-transition">
                   {{ tech }}
                 </span>
               </div>
-              <div class="flex space-x-4">
-                <a v-if="p.link" :href="p.link" target="_blank" class="text-cyan-500 hover:text-cyan-400 text-sm font-medium flex items-center transition">
-                  <i class="fas fa-external-link-alt mr-2"></i> Ver Projeto
+              <div class="flex space-x-3">
+                <a v-if="p.link" :href="p.link" target="_blank" class="text-cyan-500 hover:text-cyan-400 text-sm font-medium flex items-center">
+                  <i class="fas fa-external-link-alt mr-1"></i> Ver Projeto
                 </a>
-                <a v-if="p.github" :href="p.github" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white text-sm font-medium flex items-center transition">
-                  <i class="fab fa-github mr-2"></i> Código
+                <a v-if="p.github" :href="p.github" target="_blank" class="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-white text-sm font-medium flex items-center">
+                  <i class="fab fa-github mr-1"></i> Código
                 </a>
               </div>
             </div>
@@ -294,9 +210,9 @@
       </section>
 
       <!-- Footer -->
-      <footer class="text-center mt-16 pt-12 border-t border-gray-300 dark:border-gray-700 animate__animated animate__fadeIn theme-transition">
-        <p class="text-gray-600 dark:text-gray-400 text-lg">Entre em contato: <a :href="'mailto:' + email" class="text-cyan-500 hover:text-cyan-400 underline transition">{{ email }}</a></p>
-        <p class="mt-6 text-gray-500 dark:text-gray-500 text-sm">
+      <footer class="text-center mt-8 md:mt-12 pt-6 md:pt-8 border-t border-gray-300 dark:border-gray-700 animate__animated animate__fadeIn theme-transition">
+        <p class="text-gray-600 dark:text-gray-400">Entre em contato: <a :href="'mailto:' + email" class="text-cyan-500 hover:text-cyan-400 underline">{{ email }}</a></p>
+        <p class="mt-3 md:mt-4 text-gray-500 dark:text-gray-500 text-sm">
           &copy; {{ new Date().getFullYear() }} Mateus Oliveira. Todos os direitos reservados.
         </p>
       </footer>
@@ -308,7 +224,7 @@
       data() {
         return {
           isDarkMode: true,
-          showProjeto: true,
+          showProjeto: false,
           nome: "Mateus Oliveira de Jesus",
           descricao: "Full Stack Developer | PHP | Laravel | Vue.js | Filament | Docker | Oracle | MySQL | APIs RESTful",
           email: "mateus.oliveira.retiba@gmail.com",
@@ -464,18 +380,6 @@
         } else {
           document.documentElement.classList.remove('dark');
         }
-        
-        // Animar barras de habilidades
-        setTimeout(() => {
-          const skillBars = document.querySelectorAll('.skill-progress');
-          skillBars.forEach(bar => {
-            const width = bar.style.width;
-            bar.style.width = '0%';
-            setTimeout(() => {
-              bar.style.width = width;
-            }, 300);
-          });
-        }, 500);
       }
     }
     
@@ -484,7 +388,7 @@
 
   <script>
     function animarAoScroll() {
-      const elementos = document.querySelectorAll(".card-hover, header, section");
+      const elementos = document.querySelectorAll(".bg-gray-50, header, section");
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
